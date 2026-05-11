@@ -1,0 +1,4 @@
+node_modules/
+.env
+err.json
+error.txt
