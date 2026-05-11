@@ -1,0 +1,436 @@
+.registerPage {
+  --reg-blue: #6f96d5;
+  --reg-blue-deep: #4f75b0;
+  --reg-coral: #ff815f;
+  --reg-coral-deep: #ef6b49;
+  --reg-ink: #1b2c48;
+  --reg-ink-soft: #5a6f93;
+  --reg-line: rgba(111, 150, 213, 0.34);
+  min-height: 100svh;
+  padding: 6px 0 0;
+  background: radial-gradient(circle at 84% 8%, rgba(111, 150, 213, 0.12), transparent 40%),
+    linear-gradient(180deg, #f7fafe 0%, #edf3fb 100%);
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  color: var(--reg-ink);
+}
+
+.registerTopBar {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto 10px;
+}
+
+.registerBackLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--reg-ink);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--reg-line);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.registerLayout {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+  min-height: calc(100svh - 72px);
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.registerVisualPanel {
+  position: relative;
+}
+
+.registerVisualImage {
+  width: 100%;
+  height: 740px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(111, 150, 213, 0.26);
+  box-shadow: 0 24px 50px rgba(22, 34, 54, 0.2);
+}
+
+.registerVisualCard {
+  position: absolute;
+  left: 48px;
+  bottom: 24px;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  padding: 24px 26px;
+  box-shadow: 0 16px 30px rgba(19, 28, 42, 0.2);
+}
+
+.registerVisualCard h2 {
+  margin: 0 0 10px;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.registerVisualCard p {
+  margin: 0;
+  color: var(--reg-ink-soft);
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.registerFormPanel {
+  width: min(530px, 100%);
+  justify-self: end;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(111, 150, 213, 0.24);
+  border-radius: 22px;
+  box-shadow: 0 20px 44px rgba(28, 46, 78, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 22px 20px 18px;
+  max-height: calc(100svh - 96px);
+  display: flex;
+  flex-direction: column;
+}
+
+.registerFormPanel h1 {
+  margin: 0;
+  font-size: clamp(38px, 3.5vw, 48px);
+  line-height: 0.96;
+  letter-spacing: -0.9px;
+}
+
+.registerSubtitle {
+  margin: 8px 0 12px;
+  color: var(--reg-ink-soft);
+  font-size: clamp(16px, 1.9vw, 21px);
+  line-height: 1.28;
+}
+
+.registerFormScroller {
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-right: -4px;
+}
+
+.registerFormScroller::-webkit-scrollbar {
+  width: 8px;
+}
+
+.registerFormScroller::-webkit-scrollbar-track {
+  background: rgba(111, 150, 213, 0.12);
+  border-radius: 999px;
+}
+
+.registerFormScroller::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(111, 150, 213, 0.72), rgba(79, 117, 176, 0.78));
+  border-radius: 999px;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.registerSectionTitle {
+  margin: 14px 0 2px;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--reg-blue-deep);
+}
+
+.registerSpacer {
+  display: block;
+  height: 1px;
+  margin: 2px 0;
+  background: linear-gradient(90deg, rgba(111, 150, 213, 0.24), rgba(111, 150, 213, 0.08));
+}
+
+.registerFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.registerForm label {
+  margin-top: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--reg-ink-soft);
+}
+
+.registerInputWrap {
+  height: 50px;
+  border-radius: 12px;
+  border: 1px solid var(--reg-line);
+  background: rgba(255, 255, 255, 0.72);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+}
+
+.registerInputWrap svg {
+  color: var(--reg-blue-deep);
+}
+
+.registerInputWrap input {
+  border: none;
+  width: 100%;
+  background: transparent;
+  outline: none;
+  color: var(--reg-ink);
+  font-size: 16px;
+}
+
+.registerInputWrap select {
+  border: none;
+  width: 100%;
+  background: transparent;
+  outline: none;
+  color: var(--reg-ink);
+  font-size: 15px;
+}
+
+.registerInputWrap input::placeholder {
+  color: #93a8cd;
+}
+
+.registerPasswordInput {
+  padding-right: 8px;
+}
+
+.registerEyeBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  color: var(--reg-blue-deep);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.registerPrimaryBtn {
+  margin-top: 10px;
+  height: 50px;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--reg-coral), var(--reg-coral-deep));
+  box-shadow: 0 14px 22px rgba(239, 107, 73, 0.24);
+}
+
+.registerChecks {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.registerCheckLabel {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--reg-ink-soft);
+}
+
+.registerCheckLabel input {
+  margin-top: 2px;
+}
+
+.registerError {
+  margin: 2px 0 0;
+  color: #cf3f4f;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.registerDivider {
+  margin: 24px 0 14px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #9ca8bc;
+  font-weight: 700;
+}
+
+.registerDivider::before,
+.registerDivider::after {
+  content: "";
+  height: 1px;
+  background: rgba(170, 183, 203, 0.42);
+}
+
+.registerSocialRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.registerSocialBtn {
+  height: 48px;
+  border-radius: 11px;
+  border: 1px solid rgba(177, 190, 211, 0.52);
+  background: rgba(249, 251, 253, 0.9);
+  color: #35455f;
+  font-size: 26px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.registerSocialDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #e11d48, #f59e0b, #10b981);
+}
+
+.registerSocialDotApple {
+  background: linear-gradient(135deg, #0f172a, #64748b);
+}
+
+.registerLoginText {
+  margin: 18px 0 0;
+  text-align: center;
+  color: var(--reg-ink-soft);
+  font-size: 13px;
+}
+
+.registerLoginText a {
+  color: var(--reg-coral-deep);
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+@media (max-width: 1100px) {
+  .registerLayout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    min-height: auto;
+    padding-bottom: 26px;
+  }
+
+  .registerVisualImage {
+    height: 460px;
+  }
+
+  .registerVisualCard {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    max-width: none;
+  }
+
+  .registerVisualCard h2 {
+    font-size: 36px;
+  }
+
+  .registerVisualCard p {
+    font-size: 16px;
+  }
+
+  .registerFormPanel {
+    width: min(620px, 100%);
+    justify-self: center;
+    max-height: none;
+  }
+
+  .registerFormPanel h1 {
+    font-size: 44px;
+  }
+
+  .registerSubtitle {
+    font-size: 22px;
+  }
+
+  .registerFormScroller {
+    overflow: visible;
+    padding-right: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .registerPage {
+    padding-top: 10px;
+  }
+
+  .registerTopBar,
+  .registerLayout {
+    width: calc(100% - 24px);
+  }
+
+  .registerVisualImage {
+    height: 320px;
+  }
+
+  .registerVisualCard {
+    position: static;
+    margin-top: 12px;
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .registerVisualCard h2 {
+    font-size: 30px;
+  }
+
+  .registerFormPanel h1 {
+    font-size: 34px;
+  }
+
+  .registerFormPanel {
+    padding: 20px 14px 16px;
+  }
+
+  .registerSubtitle {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .registerForm label {
+    font-size: 13px;
+  }
+
+  .registerFormGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .registerInputWrap {
+    height: 50px;
+  }
+
+  .registerInputWrap input {
+    font-size: 16px;
+  }
+
+  .registerPrimaryBtn {
+    font-size: 22px;
+  }
+
+  .registerSocialBtn {
+    font-size: 20px;
+  }
+}
