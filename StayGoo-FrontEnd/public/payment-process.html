@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment process | StayGoo</title>
+    <style>
+      :root {
+        --bg: #edf4fb;
+        --panel: rgba(255, 255, 255, 0.92);
+        --line: #d5e2f1;
+        --text: #1f2f4a;
+        --muted: #6f849f;
+        --accent: linear-gradient(150deg, #f1724c 0%, #ef7b48 45%, #2f6fb2 100%);
+        --shadow: 0 24px 60px rgba(16, 34, 60, 0.18);
+        --radius: 22px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(255, 160, 116, 0.22), transparent 34%),
+          radial-gradient(circle at top right, rgba(62, 118, 185, 0.2), transparent 30%),
+          linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .shell {
+        width: min(1120px, calc(100% - 28px));
+        margin: 18px auto 28px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .backLink {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8);
+        font-weight: 700;
+      }
+
+      .brandMark {
+        font-weight: 800;
+        letter-spacing: -0.4px;
+      }
+
+      .hero {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .heroGrid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+      }
+
+      .visual {
+        position: relative;
+        min-height: 680px;
+        background:
+          linear-gradient(180deg, rgba(18, 32, 56, 0.2), rgba(18, 32, 56, 0.55)),
+          url("https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80") center/cover;
+      }
+
+      .visual::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(16, 29, 49, 0.08), rgba(16, 29, 49, 0.45));
+      }
+
+      .visualCard {
+        position: absolute;
+        left: 24px;
+        right: 24px;
+        bottom: 24px;
+        z-index: 1;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 20px;
+        padding: 18px;
+        background: rgba(10, 20, 36, 0.32);
+        backdrop-filter: blur(16px);
+        color: #f5f9ff;
+      }
+
+      .visualCard h1 {
+        margin: 0;
+        font-size: clamp(34px, 4vw, 54px);
+        letter-spacing: -1.4px;
+        line-height: 0.96;
+      }
+
+      .visualCard p {
+        margin: 10px 0 0;
+        color: rgba(243, 248, 255, 0.88);
+        font-size: 18px;
+        line-height: 1.4;
+      }
+
+      .content {
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.96);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: #d1633f;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 2.2px;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        margin: 8px 0 0;
+        font-size: clamp(28px, 3vw, 40px);
+        letter-spacing: -1px;
+        line-height: 1;
+      }
+
+      .meta {
+        margin: 12px 0 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .summary {
+        margin-top: 20px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 16px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      }
+
+      .summaryHead {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: flex-start;
+      }
+
+      .summaryHead strong {
+        display: block;
+        font-size: 20px;
+      }
+
+      .summaryHead span {
+        display: block;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      .pill {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #edf4fb;
+        border: 1px solid var(--line);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .bookingBox {
+        margin-top: 16px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .bookingRow {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 15px;
+        color: #4c607d;
+      }
+
+      .bookingRow strong {
+        color: var(--text);
+      }
+
+      .savedMethods {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 14px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      }
+
+      .savedMethods h3 {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .savedMethods p {
+        margin: 6px 0 0;
+        color: var(--muted);
+      }
+
+      .methodsList {
+        margin: 12px 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+
+      .methodItem {
+        border: 1px solid #c8d7ea;
+        border-radius: 12px;
+        background: #fff;
+      }
+
+      .methodLabel {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+        cursor: pointer;
+      }
+
+      .methodMain {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+      }
+
+      .methodMain strong {
+        font-size: 15px;
+        color: #243a5d;
+      }
+
+      .methodMain span {
+        display: block;
+        margin-top: 2px;
+        font-size: 13px;
+        color: #6f849f;
+      }
+
+      .methodTag {
+        border: 1px solid #c9d9ed;
+        background: #f4f9ff;
+        border-radius: 999px;
+        padding: 5px 9px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .paySavedBtn {
+        margin-top: 12px;
+      }
+
+      .paymentForm {
+        margin-top: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      label {
+        display: block;
+        color: #6d839f;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+
+      input {
+        margin-top: 6px;
+        width: 100%;
+        height: 46px;
+        border: 1px solid #c8d7ea;
+        border-radius: 12px;
+        padding: 0 14px;
+        font: inherit;
+        color: var(--text);
+        background: #fff;
+      }
+
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .totalBar {
+        margin-top: 4px;
+        border-top: 1px solid var(--line);
+        padding-top: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .payBtn {
+        margin-top: 2px;
+        width: 100%;
+        height: 50px;
+        border: none;
+        border-radius: 14px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 16px 24px rgba(240, 95, 99, 0.24);
+      }
+
+      .payBtn:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+
+      .status {
+        min-height: 20px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .status.isSuccess {
+        color: #1b7a4a;
+        font-weight: 700;
+      }
+
+      .successPanel {
+        display: none;
+        margin-top: 16px;
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(49, 146, 95, 0.24);
+        background: linear-gradient(180deg, #f4fff8, #edfdf3);
+      }
+
+      .successPanel.isVisible {
+        display: block;
+      }
+
+      .successPanel h3 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .successPanel p {
+        margin: 8px 0 0;
+        color: #476578;
+        line-height: 1.5;
+      }
+
+      .successActions {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .secondaryBtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 12px;
+        border: 1px solid #c6d7ea;
+        background: #fff;
+        font-weight: 700;
+      }
+
+      .supportNote {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 980px) {
+        .heroGrid {
+          grid-template-columns: 1fr;
+        }
+
+        .visual {
+          min-height: 380px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .shell {
+          width: calc(100% - 18px);
+          margin-top: 10px;
+        }
+
+        .content {
+          padding: 18px;
+        }
+
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+
+        .summaryHead {
+          flex-direction: column;
+        }
+
+        .pill {
+          align-self: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="topbar">
+        <a class="backLink" href="/">← Volver a StayGoo</a>
+        <div class="brandMark">StayGoo</div>
+      </div>
+
+      <section class="hero">
+        <div class="heroGrid">
+          <div class="visual" id="visualHero">
+            <div class="visualCard">
+              <h1>Payment process</h1>
+              <p>Completa tu pago en una pestaña dedicada y finaliza la reserva sin perder la información del alojamiento.</p>
+            </div>
+          </div>
+
+          <div class="content">
+            <p class="eyebrow">Secure checkout</p>
+            <h2 id="stayTitle">Reserva en proceso</h2>
+            <p class="meta" id="stayMeta">Si no ves datos, vuelve a la pestaña de información y reserva otra vez.</p>
+
+            <section class="summary">
+              <div class="summaryHead">
+                <div>
+                  <strong id="summaryPrice">$0</strong>
+                  <span id="summaryLocation">Ubicación</span>
+                </div>
+                <span class="pill" id="summaryGuests">0 guests</span>
+              </div>
+
+              <div class="bookingBox">
+                <div class="bookingRow"><span>Nights</span><strong id="summaryNights">0</strong></div>
+                <div class="bookingRow"><span>Total</span><strong id="summaryTotal">$0</strong></div>
+              </div>
+            </section>
+
+            <section class="savedMethods" id="savedMethodsPanel" hidden>
+              <h3>Choose a saved payment method</h3>
+              <p>Use one of your registered methods to complete this reservation.</p>
+              <ul class="methodsList" id="methodsList"></ul>
+              <button class="payBtn paySavedBtn" id="paySavedBtn" type="button">Pay with selected method</button>
+            </section>
+
+            <form class="paymentForm" id="paymentForm">
+              <label>
+                Cardholder name
+                <input type="text" name="cardholder" required placeholder="Full name" />
+              </label>
+
+              <label>
+                Card number
+                <input type="text" name="cardNumber" inputmode="numeric" maxlength="19" required placeholder="1234 5678 9012 3456" />
+              </label>
+
+              <div class="grid2">
+                <label>
+                  Expiry
+                  <input type="text" name="expiry" maxlength="5" required placeholder="MM/YY" />
+                </label>
+                <label>
+                  CVC
+                  <input type="password" name="cvc" inputmode="numeric" maxlength="4" required placeholder="123" />
+                </label>
+              </div>
+
+              <button class="payBtn" id="payBtn" type="submit">Pay and finish reservation</button>
+              <p class="status" id="status" aria-live="polite"></p>
+            </form>
+
+            <section class="successPanel" id="successPanel" aria-live="polite">
+              <h3>Reservation completed</h3>
+              <p>Your booking was successfully confirmed and stored. You can return to the stay information tab or close this payment tab.</p>
+              <div class="successActions">
+                <a class="secondaryBtn" id="returnLink" href="/">Return to stay details</a>
+              </div>
+            </section>
+
+            <p class="supportNote">For demo purposes, this payment flow stores the reservation locally in your browser.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const raw = params.get("data");
+      const paymentForm = document.getElementById("paymentForm");
+      const payBtn = document.getElementById("payBtn");
+      const savedMethodsPanel = document.getElementById("savedMethodsPanel");
+      const methodsList = document.getElementById("methodsList");
+      const paySavedBtn = document.getElementById("paySavedBtn");
+      const statusNode = document.getElementById("status");
+      const successPanel = document.getElementById("successPanel");
+      const returnLink = document.getElementById("returnLink");
+      const stayTitle = document.getElementById("stayTitle");
+      const stayMeta = document.getElementById("stayMeta");
+      const summaryPrice = document.getElementById("summaryPrice");
+      const summaryLocation = document.getElementById("summaryLocation");
+      const summaryGuests = document.getElementById("summaryGuests");
+      const summaryNights = document.getElementById("summaryNights");
+      const summaryTotal = document.getElementById("summaryTotal");
+      const visualHero = document.getElementById("visualHero");
+      let selectedMethodId = null;
+
+      const normalizeSavedMethods = (rawMethods) => {
+        if (!Array.isArray(rawMethods)) {
+          return [];
+        }
+
+        return rawMethods
+          .map((method, index) => {
+            if (typeof method === "string") {
+              return {
+                id: `saved-${index + 1}`,
+                label: method,
+                brand: "Card",
+                last4: method.slice(-4),
+                expiry: ""
+              };
+            }
+
+            if (!method || typeof method !== "object") {
+              return null;
+            }
+
+            const brand = String(method.brand || method.type || "Card");
+            const last4 = String(method.last4 || method.lastDigits || "");
+            const expiry = String(method.expiry || method.expires || "");
+            const label = method.label || `${brand} ${last4 ? `ending in ${last4}` : ""}`.trim();
+
+            return {
+              id: String(method.id || method.methodId || `saved-${index + 1}`),
+              label,
+              brand,
+              last4,
+              expiry,
+              isDefault: Boolean(method.isDefault)
+            };
+          })
+          .filter(Boolean);
+      };
+
+      const getSavedMethods = () => {
+        try {
+          const rawSaved = window.localStorage.getItem("staygooPaymentMethods");
+          if (!rawSaved) {
+            return [];
+          }
+          const parsed = JSON.parse(rawSaved);
+          return normalizeSavedMethods(parsed);
+        } catch {
+          return [];
+        }
+      };
+
+      const setStatus = (message, success = false) => {
+        statusNode.textContent = message;
+        statusNode.classList.toggle("isSuccess", success);
+      };
+
+      const finishReservation = async (paymentInfo) => {
+        const token = window.localStorage.getItem("staygooToken");
+        
+        let housingId = null;
+        let checkInDateStr = null;
+        let checkOutDateStr = null;
+        if (raw) {
+          try {
+            const parsed = JSON.parse(decodeURIComponent(raw));
+            housingId = parsed.data ? parsed.data.id : parsed.id;
+            checkInDateStr = parsed.checkIn;
+            checkOutDateStr = parsed.checkOut;
+          } catch(e){}
+        }
+
+        const reservationLoc = {
+          title: stayTitle.textContent,
+          location: summaryLocation.textContent,
+          guests: summaryGuests.textContent,
+          total: summaryTotal.textContent,
+          payment: paymentInfo,
+          bookedAt: new Date().toISOString()
+        };
+        window.localStorage.setItem("staygooLastReservation", JSON.stringify(reservationLoc));
+
+        if (housingId) {
+          try {
+            // Guardar en backend (reservas / bookings)
+            const checkInDate = checkInDateStr ? new Date(checkInDateStr) : new Date();
+            const checkOutDate = checkOutDateStr ? new Date(checkOutDateStr) : new Date();
+            if (!checkOutDateStr) {
+               checkOutDate.setDate(checkOutDate.getDate() + (Number(summaryNights.textContent) || 5));
+            }
+            
+            await fetch("http://localhost:3000/api/bookings", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                ...(token ? { "Authorization": `Bearer ${token}` } : {})
+              },
+              body: JSON.stringify({
+                id_housing: Number(housingId),
+                start_date: checkInDate.toISOString().split("T")[0],
+                end_date: checkOutDate.toISOString().split("T")[0],
+                total_price: Number(summaryTotal.textContent.replace(/[^0-9.-]+/g, "")) || 0,
+                status: "confirmed"
+              })
+            });
+          } catch (e) {
+            console.error("Error al guardar reserva en BD", e);
+          }
+        }
+
+        successPanel.classList.add("isVisible");
+        setStatus("Reservation completed successfully.", true);
+      };
+
+      const renderSavedMethods = (methods) => {
+        methodsList.innerHTML = methods
+          .map((method, index) => {
+            const defaultTag = method.isDefault ? '<span class="methodTag">Default</span>' : "";
+            const checked = method.isDefault || index === 0 ? "checked" : "";
+            const subtitle = method.expiry
+              ? `${method.brand} • Expires ${method.expiry}`
+              : method.brand;
+
+            return `
+              <li class="methodItem">
+                <label class="methodLabel">
+                  <input type="radio" name="savedMethod" value="${method.id}" ${checked} />
+                  <div class="methodMain">
+                    <div>
+                      <strong>${method.label}</strong>
+                      <span>${subtitle}</span>
+                    </div>
+                    ${defaultTag}
+                  </div>
+                </label>
+              </li>
+            `;
+          })
+          .join("");
+
+        const initial = methods.find((method) => method.isDefault) || methods[0];
+        selectedMethodId = initial ? initial.id : null;
+
+        methodsList.querySelectorAll('input[name="savedMethod"]').forEach((node) => {
+          node.addEventListener("change", () => {
+            selectedMethodId = node.value;
+          });
+        });
+      };
+
+      const ensureSession = () => {
+        const hasSession = window.localStorage.getItem("staygooSession") === "true";
+        const accessRole = window.localStorage.getItem("staygooAccessRole");
+        if (hasSession && (accessRole === "host" || accessRole === "traveler")) {
+          return true;
+        }
+
+        window.localStorage.removeItem("staygooSession");
+        window.localStorage.removeItem("staygooAccessRole");
+        const redirectTo = encodeURIComponent(`${window.location.pathname}${window.location.search}`);
+        window.location.href = `/login?redirect=${redirectTo}`;
+        return false;
+      };
+
+      if (!ensureSession()) {
+        throw new Error("Redirecting to login");
+      }
+
+      const renderFallback = () => {
+        stayTitle.textContent = "Reservation checkout";
+        stayMeta.textContent = "No stay data was passed to this tab, so the checkout is using the default demo reservation.";
+        summaryPrice.textContent = "$280,000";
+        summaryLocation.textContent = "Default stay";
+        summaryGuests.textContent = "2 guests";
+        summaryNights.textContent = "5";
+        summaryTotal.textContent = "$1,400,000";
+      };
+
+      if (!raw) {
+        renderFallback();
+      } else {
+        try {
+          const parsed = JSON.parse(decodeURIComponent(raw));
+          const title = parsed.title || "Horizon Villa";
+          const location = parsed.location || "Santorini, Greece";
+          const price = parsed.price || "$280,000/night";
+          const guests = parsed.guests || 2;
+          const nights = parsed.nights || 5;
+          const total = parsed.total || 1400000;
+          const image = parsed.image || "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80";
+          const returnUrl = parsed.data ? `/stay-detail.html?data=${encodeURIComponent(JSON.stringify(parsed.data))}` : "/";
+
+          stayTitle.textContent = title;
+          stayMeta.textContent = `${location} · ${price}`;
+          summaryPrice.textContent = price;
+          summaryLocation.textContent = location;
+          summaryGuests.textContent = `${guests} ${guests === 1 ? "guest" : "guests"}`;
+          summaryNights.textContent = String(nights);
+          summaryTotal.textContent = `$${Number(total).toLocaleString()}`;
+          visualHero.style.backgroundImage = `linear-gradient(180deg, rgba(18, 32, 56, 0.2), rgba(18, 32, 56, 0.55)), url("${image}")`;
+          returnLink.setAttribute("href", returnUrl);
+        } catch (error) {
+          renderFallback();
+        }
+      }
+
+      const savedMethods = getSavedMethods();
+      if (savedMethods.length > 0) {
+        savedMethodsPanel.hidden = false;
+        paymentForm.hidden = true;
+        renderSavedMethods(savedMethods);
+
+        paySavedBtn.addEventListener("click", () => {
+          if (!selectedMethodId) {
+            setStatus("Select a payment method to continue.", false);
+            return;
+          }
+
+          paySavedBtn.disabled = true;
+          paySavedBtn.textContent = "Processing...";
+          setStatus("Processing payment...", false);
+
+          const selected = savedMethods.find((method) => method.id === selectedMethodId);
+          window.setTimeout(() => {
+            finishReservation(selected ? selected.label : "Saved method");
+            paySavedBtn.textContent = "Paid";
+          }, 900);
+        });
+      } else {
+        savedMethodsPanel.hidden = true;
+        paymentForm.hidden = false;
+      }
+
+      paymentForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        payBtn.disabled = true;
+        payBtn.textContent = "Processing...";
+        setStatus("Processing payment...", false);
+
+        window.setTimeout(() => {
+          finishReservation("New card");
+          payBtn.textContent = "Paid";
+        }, 900);
+      });
+    </script>
+  </body>
+</html>

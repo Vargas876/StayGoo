@@ -1,0 +1,327 @@
+.loginPage {
+  --login-bg: #eef2f7;
+  --login-surface: rgba(255, 255, 255, 0.88);
+  --login-surface-strong: rgba(255, 255, 255, 0.95);
+  --login-border: rgba(160, 180, 210, 0.3);
+  --login-ink: #1f2f4a;
+  --login-ink-soft: #5f6f87;
+  --login-accent: #ff815f;
+  --login-accent-deep: #ef6b49;
+  
+  min-height: 100svh;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  color: var(--login-ink);
+  overflow: hidden;
+}
+
+.loginPageGlow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 20% 80%, rgba(36, 63, 104, 0.12), transparent 40%);
+  z-index: 0;
+}
+
+.loginTopBar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 50;
+}
+
+.loginBackLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--login-ink);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--login-border);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: var(--login-surface-strong);
+  transition: all 150ms ease;
+}
+
+.loginBackLink:hover {
+  background: var(--login-surface);
+  border-color: var(--login-accent-deep);
+}
+
+.loginLayout {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.loginVisualPanel {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+.loginVisualImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.loginVisualCard {
+  display: none;
+}
+
+.loginFormPanel {
+  width: min(420px, 100%);
+  background: var(--login-surface);
+  border: 1px solid var(--login-border);
+  border-radius: 26px;
+  padding: 36px 38px 32px;
+  box-shadow: 0 22px 50px rgba(23, 32, 48, 0.14);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+  margin: 0 20px;
+}
+
+.loginEyebrow {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  font-weight: 700;
+  color: var(--login-accent-deep);
+}
+
+.loginFormPanel h1 {
+  margin: 10px 0 26px;
+  font-size: 46px;
+  line-height: 1;
+  letter-spacing: -1.4px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.loginForm label {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  color: var(--login-ink-soft);
+  font-weight: 700;
+}
+
+.loginInputWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--login-border);
+  background: rgba(237, 242, 249, 0.84);
+}
+
+.loginInputWrap svg {
+  color: #7d8faa;
+}
+
+.loginInputWrap input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: var(--login-ink);
+  outline: none;
+}
+
+.loginInputWrap input::placeholder {
+  color: #94a4bc;
+}
+
+.loginRoleSwitcher {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.loginRoleBtn {
+  height: 44px;
+  border-radius: 11px;
+  border: 1px solid var(--login-border);
+  background: rgba(237, 242, 249, 0.84);
+  color: #5b6f8e;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 170ms ease;
+}
+
+.loginRoleBtn.isActive {
+  border-color: rgba(239, 107, 73, 0.85);
+  color: var(--login-accent-deep);
+  background: rgba(255, 135, 94, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(239, 107, 73, 0.2);
+}
+
+.loginPasswordRow {
+  margin-top: 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.loginPasswordRow button {
+  border: none;
+  background: transparent;
+  color: var(--login-accent-deep);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.loginRememberRow {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--login-ink-soft);
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+.loginRememberBox {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  border: 1px solid rgba(132, 154, 188, 0.8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: all 180ms ease;
+}
+
+.loginRememberRow:hover .loginRememberBox {
+  color: var(--login-accent-deep);
+  border-color: var(--login-accent-deep);
+}
+
+.loginPrimaryBtn {
+  margin-top: 8px;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 27px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--login-accent), var(--login-accent-deep));
+  box-shadow: 0 14px 24px rgba(239, 107, 73, 0.28);
+  transition: all 150ms ease;
+}
+
+.loginPrimaryBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px rgba(239, 107, 73, 0.32);
+}
+
+.loginPrimaryBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loginSignupText {
+  margin: 22px 0 0;
+  text-align: center;
+  color: var(--login-ink-soft);
+  font-size: 14px;
+}
+
+.loginSignupText a {
+  border: none;
+  color: var(--login-accent-deep);
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 150ms ease;
+}
+
+.loginSignupText a:hover {
+  text-decoration: underline;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .loginFormPanel {
+    width: min(560px, 100%);
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .loginTopBar {
+    top: 14px;
+    left: 14px;
+  }
+
+  .loginBackLink {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .loginFormPanel {
+    border-radius: 18px;
+    padding: 24px 18px 22px;
+    margin: 0 12px;
+    width: min(calc(100% - 24px), 420px);
+  }
+
+  .loginFormPanel h1 {
+    font-size: 36px;
+    margin: 10px 0 20px;
+  }
+
+  .loginEyebrow {
+    font-size: 11px;
+  }
+
+  .loginForm label {
+    font-size: 11px;
+  }
+
+  .loginInputWrap {
+    height: 48px;
+    padding: 0 12px;
+  }
+
+  .loginPrimaryBtn {
+    font-size: 22px;
+    height: 48px;
+  }
+
+  .loginSignupText {
+    font-size: 13px;
+  }
+
+  .loginSignupText a {
+    font-size: 14px;
+  }
+}

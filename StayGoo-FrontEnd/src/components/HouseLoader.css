@@ -1,0 +1,148 @@
+.houseLoader {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.houseLoaderSvg {
+	width: 100%;
+	height: auto;
+}
+
+.loaderHalo {
+	fill: rgba(111, 150, 213, 0.16);
+	stroke: rgba(111, 150, 213, 0.32);
+	stroke-width: 1;
+	animation: haloPulse 2.2s ease-in-out infinite;
+}
+
+.houseGroup {
+	transform-origin: center;
+	animation: houseFloat 1.8s ease-in-out infinite;
+}
+
+.roof {
+	fill: url(#roofGradient);
+	filter: drop-shadow(0 6px 8px rgba(126, 53, 33, 0.2));
+}
+
+.houseBody {
+	fill: url(#wallGradient);
+	stroke: rgba(82, 103, 132, 0.25);
+	stroke-width: 1.5;
+}
+
+.door {
+	fill: #7da5e5;
+}
+
+.window {
+	fill: #c7dcff;
+	animation: windowGlow 1.8s ease-in-out infinite;
+}
+
+.windowRight {
+	animation-delay: 0.2s;
+}
+
+.ground {
+	fill: none;
+	stroke: rgba(71, 95, 127, 0.4);
+	stroke-width: 3;
+	stroke-linecap: round;
+}
+
+.checkStroke {
+	fill: none;
+	stroke: #2f7e57;
+	stroke-width: 5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 72;
+	stroke-dashoffset: 72;
+	animation: drawCheck 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.orbit {
+	fill: #6f96d5;
+	transform-origin: 90px 90px;
+}
+
+.dot1 {
+	animation: orbitSpin 2.3s linear infinite;
+}
+
+.dot2 {
+	animation: orbitSpin 2.3s linear infinite 0.75s;
+}
+
+.dot3 {
+	animation: orbitSpin 2.3s linear infinite 1.3s;
+}
+
+.houseLoaderLabel {
+	color: #2a4060;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 0.2px;
+}
+
+@keyframes houseFloat {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-3px);
+	}
+}
+
+@keyframes haloPulse {
+	0%,
+	100% {
+		opacity: 0.7;
+		transform: scale(0.98);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.02);
+	}
+}
+
+@keyframes windowGlow {
+	0%,
+	100% {
+		fill: #c7dcff;
+	}
+	50% {
+		fill: #e7f1ff;
+	}
+}
+
+@keyframes drawCheck {
+	0% {
+		stroke-dashoffset: 72;
+		opacity: 0;
+	}
+	20% {
+		opacity: 1;
+	}
+	65% {
+		stroke-dashoffset: 0;
+		opacity: 1;
+	}
+	100% {
+		stroke-dashoffset: 0;
+		opacity: 0;
+	}
+}
+
+@keyframes orbitSpin {
+	from {
+		transform: rotate(0deg) translateX(54px) rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg) translateX(54px) rotate(-360deg);
+	}
+}

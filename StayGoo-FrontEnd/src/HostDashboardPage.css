@@ -1,0 +1,2703 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap");
+
+.hostDashboardPage {
+  --host-bg: #f4f8ff;
+  --host-panel: #eaf2fc;
+  --host-card: #ffffff;
+  --host-text: #1f2f4a;
+  --host-soft: #61708a;
+  --host-line: #d8e4f4;
+  --host-red: #ef7b48;
+  --host-red-soft: #fff1e8;
+  --host-blue: #2f6fb2;
+  --host-blue-soft: #e8f1fc;
+  --host-font-body: "Manrope", "Segoe UI", sans-serif;
+  --host-font-display: "Space Grotesk", "Manrope", "Segoe UI", sans-serif;
+  min-height: 100svh;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: 248px 1fr;
+  background: var(--host-bg);
+  color: var(--host-text);
+  font-family: var(--host-font-body);
+}
+
+.hostSidebar {
+  border-right: 1px solid var(--host-line);
+  background: var(--host-panel);
+  padding: 18px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hostBrandBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.hostBrandBlock p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--host-blue);
+  text-align: center;
+}
+
+.hostBrandBlock h2 {
+  margin: 3px 0 0;
+  font-size: 29px;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.9px;
+  font-family: var(--host-font-display);
+}
+
+.hostBrandUserIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--host-blue);
+  background: white;
+  object-fit: cover;
+  display: block;
+  transition: filter 0.2s ease;
+}
+
+.hostBrandPhotoLabel {
+  display: block;
+  cursor: pointer;
+}
+
+.hostBrandPhotoLabel:hover .hostBrandUserIcon {
+  filter: brightness(0.85);
+}
+
+.hostMainNav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hostNavItem {
+  border: none;
+  height: 38px;
+  border-radius: 999px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #4b5f7e;
+  padding: 0 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hostNavItem.isActive {
+  background: linear-gradient(160deg, #ffffff 0%, #f5f9ff 100%);
+  color: var(--host-blue);
+  box-shadow: 0 8px 16px rgba(47, 111, 178, 0.14);
+}
+
+.hostAddPropertyBtn {
+  margin-top: auto;
+  border: none;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ff9e6d 0%, #ef7b48 100%);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 20px rgba(239, 123, 72, 0.3);
+}
+
+.hostBottomNav {
+  display: grid;
+  gap: 5px;
+  margin-top: auto;
+}
+
+.hostBottomNav button {
+  border: none;
+  background: transparent;
+  height: 34px;
+  border-radius: 8px;
+  color: #7e8490;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.hostBottomNav button:hover {
+  background: var(--host-blue-soft);
+  color: var(--host-blue);
+}
+
+.hostSidebarCopyright {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: #a3a8b2;
+}
+
+.hostMain {
+  padding: 28px 30px 30px;
+  width: min(1460px, 100%);
+  box-sizing: border-box;
+  margin: 0 auto;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 22px;
+  overflow: hidden;
+}
+
+.hostMainFixedPane {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.hostMainFixedPane .hostListingEditor,
+.hostMainFixedPane .hostListingChoiceWrap,
+.hostMainFixedPane .hostReservationsPage,
+.hostMainFixedPane .hostSupportPage,
+.hostMainFixedPane .messagesSection {
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 4px 12px 34px 0;
+}
+
+.hostSupportPage {
+  display: grid;
+  gap: 18px;
+}
+
+.hostSupportHeader h1 {
+  margin: 0;
+  font-size: clamp(30px, 3.2vw, 44px);
+  letter-spacing: -0.8px;
+  font-family: var(--host-font-display);
+}
+
+.hostSupportHeader p {
+  margin: 6px 0 0;
+  color: var(--host-soft);
+}
+
+.hostSupportGrid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.4fr;
+  gap: 14px;
+}
+
+.hostSupportCard {
+  border: 1px solid var(--host-line);
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.hostSupportCard h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.hostSupportContactCard p {
+  margin: 0;
+  color: var(--host-soft);
+}
+
+.hostSupportLogo {
+  width: 150px;
+  height: auto;
+}
+
+.hostSupportContactList {
+  display: grid;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.hostSupportContactList article {
+  border: 1px solid var(--host-line);
+  border-radius: 12px;
+  background: #f9fbff;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hostSupportContactList strong,
+.hostSupportContactList span {
+  display: block;
+}
+
+.hostSupportContactList strong {
+  font-size: 13px;
+}
+
+.hostSupportContactList span {
+  font-size: 13px;
+  color: var(--host-soft);
+}
+
+.hostSupportForm {
+  display: grid;
+  gap: 10px;
+}
+
+.hostSupportForm label {
+  display: grid;
+  gap: 6px;
+  color: #697892;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hostSupportForm input,
+.hostSupportForm textarea {
+  border: 1px solid #d5e2f2;
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--host-text);
+  font-size: 14px;
+  font-family: var(--host-font-body);
+  padding: 0 12px;
+  height: 40px;
+}
+
+.hostSupportForm textarea {
+  min-height: 130px;
+  resize: vertical;
+  padding: 12px;
+}
+
+.hostSupportSendBtn {
+  border: none;
+  height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(140deg, #2f6fb2 0%, #3d78d1 100%);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hostSupportStatus {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hostSupportStatus.isSuccess {
+  color: #1e9a5a;
+}
+
+.hostSupportStatus.isError {
+  color: #d15f3b;
+}
+
+.hostTopBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.hostTopBar h1 {
+  margin: 0;
+  font-size: clamp(28px, 3.2vw, 44px);
+  letter-spacing: -1px;
+  font-family: var(--host-font-display);
+}
+
+.hostTopBar p {
+  margin: 4px 0 0;
+  color: var(--host-soft);
+}
+
+.hostLiveBadge {
+  margin-top: 4px;
+  height: 34px;
+  border-radius: 11px;
+  padding: 0 12px;
+  background: #ffffff;
+  border: 1px solid #cfe0f3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--host-blue);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.hostLiveBadge span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+
+.hostMetricsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.hostMetricCard {
+  background: var(--host-card);
+  border: 1px solid var(--host-line);
+  border-radius: 20px;
+  padding: 20px 22px;
+  min-height: 124px;
+  position: relative;
+  box-shadow: 0 10px 18px rgba(22, 28, 37, 0.08);
+}
+
+.hostMetricCard p {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  color: #8e93a0;
+  font-weight: 700;
+}
+
+.hostMetricCard h3 {
+  margin: 10px 0 8px;
+  font-size: clamp(26px, 2vw, 40px);
+  letter-spacing: -0.9px;
+}
+
+.hostMetricCard small {
+  color: #8e93a0;
+  font-weight: 600;
+}
+
+.hostMetricCard svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #d7d9df;
+}
+
+.hostMetricCard.success small {
+  color: #16a34a;
+}
+
+.hostMetricCard.highlight {
+  background: linear-gradient(140deg, #ff9c6a 0%, #ef7b48 100%);
+  color: #fff;
+}
+
+.hostMetricCard.highlight p,
+.hostMetricCard.highlight small,
+.hostMetricCard.highlight svg {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.hostContentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  min-height: 0;
+}
+
+.hostReservations {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(216, 228, 244, 0.95);
+  border-radius: 24px;
+  padding: 20px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(340px, 48vh, 560px);
+}
+
+.hostSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.hostSectionHeader h2 {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: -0.8px;
+  font-family: var(--host-font-display);
+}
+
+.hostSectionHeader p {
+  margin: 2px 0 0;
+  color: var(--host-soft);
+}
+
+.hostSectionHeader button {
+  border: none;
+  background: transparent;
+  color: var(--host-blue);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hostReservationList {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.hostReservationRow {
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid var(--host-line);
+  padding: 12px 14px;
+  box-shadow: 0 6px 14px rgba(20, 24, 32, 0.04);
+}
+
+.hostReservationRow:hover {
+  border-color: #c5d7ee;
+  transform: translateY(-1px);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.hostReservationRow img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hostReservationRow h3 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -0.3px;
+  font-family: var(--host-font-display);
+}
+
+.hostReservationRow p {
+  margin: 2px 0 0;
+  color: #858a95;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hostStatus {
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.hostStatus.confirmed {
+  color: #16a34a;
+  background: #eaf9ee;
+}
+
+.hostStatus.pending {
+  color: #d97706;
+  background: #fff7e8;
+}
+
+.hostReservationRow button {
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: transparent;
+  color: #8c919c;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.hostReservationsPage {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.hostReservationsTopBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.hostReservationsTopBar h1 {
+  margin: 0;
+  font-size: clamp(32px, 3.6vw, 52px);
+  letter-spacing: -1px;
+  font-family: var(--host-font-display);
+}
+
+.hostReservationsTopBar p {
+  margin: 4px 0 0;
+  color: var(--host-soft);
+}
+
+.hostReservationsActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hostPropertySelector {
+  border: 1px solid #d8e4f4;
+  border-radius: 999px;
+  background: #fff;
+  height: 40px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #294f7c;
+  font-weight: 700;
+  min-width: 280px;
+}
+
+.hostPropertySelectField {
+  border: none;
+  background: transparent;
+  color: #294f7c;
+  font: inherit;
+  font-weight: 700;
+  width: 100%;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.hostRoundIconBtn {
+  border: 1px solid #d8e4f4;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #4e6484;
+  cursor: pointer;
+}
+
+.hostReservationsLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(290px, 0.95fr);
+  gap: 16px;
+  min-height: 0;
+}
+
+.hostCalendarCard {
+  background: #fff;
+  border: 1px solid #d8e4f4;
+  border-radius: 24px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.hostCalendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hostCalendarHeader h2 {
+  margin: 0;
+  font-size: 36px;
+  font-family: var(--host-font-display);
+}
+
+.hostCalendarNav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hostCalendarNav button {
+  border: none;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  color: #5d7090;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.hostTodayBtn {
+  width: auto !important;
+  padding: 0 10px;
+  background: #f2f6fd !important;
+  border: 1px solid #dbe6f5 !important;
+  font-size: 12px !important;
+  font-weight: 700;
+}
+
+.hostCalendarWeekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: 1px solid #e3ecf8;
+  border-left: 1px solid #e3ecf8;
+}
+
+.hostCalendarWeekdays span {
+  border-right: 1px solid #e3ecf8;
+  border-bottom: 1px solid #e3ecf8;
+  min-height: 34px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #8a9ab1;
+  letter-spacing: 0.8px;
+}
+
+.hostCalendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-left: 1px solid #e3ecf8;
+  border-bottom: 1px solid #e3ecf8;
+}
+
+.hostCalendarCell {
+  min-height: 98px;
+  border-right: 1px solid #e3ecf8;
+  border-top: 1px solid #e3ecf8;
+  padding: 8px;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  cursor: pointer;
+  transition: background-color 140ms ease;
+}
+
+.hostCalendarCell:hover {
+  background: #f7fbff;
+}
+
+.hostCalendarCell.isSelected {
+  background: #edf5ff;
+}
+
+.hostCalendarCell.hasEvent {
+  box-shadow: inset 3px 0 0 transparent;
+}
+
+.hostCalendarCell.has-checkin {
+  box-shadow: inset 3px 0 0 #ef7b48;
+}
+
+.hostCalendarCell.has-reserved {
+  box-shadow: inset 3px 0 0 #ffad74;
+}
+
+.hostCalendarCell.has-checkout {
+  box-shadow: inset 3px 0 0 #2f6fb2;
+}
+
+.hostCalendarCell.has-inquiry {
+  box-shadow: inset 3px 0 0 #5e8fcb;
+}
+
+.hostCalendarCell.has-staff {
+  box-shadow: inset 3px 0 0 #7aa4d8;
+}
+
+.hostCalendarCell.has-blocked {
+  box-shadow: inset 3px 0 0 #91a3bb;
+}
+
+.hostCalendarCell strong {
+  font-size: 14px;
+  color: #273c5e;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hostCalendarDateDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.hostCalendarDateDot.checkin {
+  background: #ef7b48;
+}
+
+.hostCalendarDateDot.reserved {
+  background: #ffad74;
+}
+
+.hostCalendarDateDot.checkout {
+  background: #2f6fb2;
+}
+
+.hostCalendarDateDot.inquiry {
+  background: #5e8fcb;
+}
+
+.hostCalendarDateDot.staff {
+  background: #7aa4d8;
+}
+
+.hostCalendarDateDot.blocked {
+  background: #91a3bb;
+}
+
+.hostCalendarCell.isMuted strong {
+  color: #b1bfd2;
+}
+
+.hostCalendarTag {
+  border-radius: 8px;
+  min-height: 26px;
+  padding: 4px 6px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.15;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hostCalendarTag.checkin,
+.hostCalendarTag.reserved {
+  background: #fff1e8;
+  color: var(--host-red);
+}
+
+.hostCalendarTag.reserved {
+  background: #fff5ee;
+  color: #d9733f;
+}
+
+.hostCalendarTag.checkout {
+  background: #e8f1fc;
+  color: var(--host-blue);
+}
+
+.hostCalendarTag.inquiry {
+  background: #e8f1fc;
+  color: var(--host-blue);
+}
+
+.hostCalendarTag.staff {
+  background: #eef5ff;
+  color: var(--host-blue);
+}
+
+.hostCalendarTag.blocked {
+  background: #eff3f8;
+  color: #60728b;
+}
+
+.hostCalendarLegend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6f7f97;
+}
+
+.hostCalendarLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hostCalendarLegend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.hostCalendarLegend .isCheckin {
+  background: var(--host-red);
+}
+
+.hostCalendarLegend .isReserved {
+  background: #ffad74;
+}
+
+.hostCalendarLegend .isCheckout {
+  background: #2f6fb2;
+}
+
+.hostCalendarLegend .isInquiry {
+  background: var(--host-blue);
+}
+
+.hostCalendarLegend .isStaff {
+  background: #7aa4d8;
+}
+
+.hostCalendarLegend .isBlocked {
+  background: #c9d4e3;
+}
+
+.hostArrivalsPanel {
+  border-left: 1px solid #dbe6f6;
+  padding-left: 16px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.hostArrivalsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hostArrivalsHeader h2 {
+  margin: 0;
+  font-size: 34px;
+  font-family: var(--host-font-display);
+}
+
+.hostArrivalsHeader span {
+  border-radius: 999px;
+  background: var(--host-red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.hostArrivalsList {
+  display: grid;
+  gap: 10px;
+}
+
+.hostArrivalCard {
+  background: #fff;
+  border: 1px solid #dbe6f6;
+  border-radius: 16px;
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.hostArrivalCard.isPending {
+  opacity: 0.72;
+}
+
+.hostArrivalCard > header {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 34px;
+  gap: 8px;
+  align-items: center;
+}
+
+.hostArrivalCard > header img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hostArrivalCard > header h3 {
+  margin: 0;
+  font-size: 22px;
+  font-family: var(--host-font-display);
+}
+
+.hostArrivalCard > header p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #7b89a0;
+}
+
+.hostArrivalCard > header button {
+  border: none;
+  background: #f3f7fc;
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  color: #70829b;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.hostGuestNote {
+  border: 1px solid #e3eaf6;
+  border-radius: 12px;
+  background: #fbfdff;
+  padding: 8px;
+}
+
+.hostGuestNote small {
+  color: var(--host-red);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.hostGuestNote p {
+  margin: 6px 0 0;
+  color: #667892;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.hostArrivalActions {
+  display: grid;
+  grid-template-columns: 1fr 34px;
+  gap: 8px;
+}
+
+.hostArrivalMessageBtn {
+  border: 1px solid #dbe5f4;
+  background: #f7fbff;
+  border-radius: 10px;
+  height: 34px;
+  color: #405d85;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hostOccupancyCard {
+  margin-top: 4px;
+  background:
+    linear-gradient(140deg, rgba(255, 153, 105, 0.92), rgba(239, 123, 72, 0.92)),
+    url("https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=800&q=80") center / cover;
+  border-radius: 18px;
+  color: #fff;
+  padding: 14px;
+  min-height: 108px;
+  position: relative;
+}
+
+.hostOccupancyCard p {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  font-weight: 800;
+}
+
+.hostOccupancyCard h3 {
+  margin: 6px 0 2px;
+  font-size: 50px;
+  line-height: 1;
+  font-family: var(--host-font-display);
+}
+
+.hostOccupancyCard span {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hostOccupancyCard button {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hostListingEditor {
+  display: grid;
+  gap: 22px;
+  align-content: start;
+}
+
+.hostRegisteredListings {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.hostRegisteredGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.hostRegisteredCard {
+  border: 1px solid #d7e3f4;
+  border-radius: 18px;
+  background: #fff;
+  overflow: hidden;
+  display: grid;
+}
+
+.hostRegisteredCover {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.hostRegisteredContent {
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.hostRegisteredTopRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hostRegisteredTopRow h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.1;
+  letter-spacing: -0.4px;
+  font-family: var(--host-font-display);
+}
+
+.hostRegisteredBadge {
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #fff;
+  background: var(--host-blue);
+}
+
+.hostRegisteredBadge.isDraft {
+  background: var(--host-red);
+}
+
+.hostRegisteredLocation,
+.hostRegisteredMeta {
+  margin: 0;
+  color: #637590;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hostRegisteredMeta {
+  gap: 14px;
+}
+
+.hostRegisteredMeta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hostRegisteredProfile {
+  border: 1px solid #e4ecf7;
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f7fbff;
+}
+
+.hostRegisteredProfile img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hostRegisteredProfile strong {
+  display: block;
+  color: #213252;
+  font-size: 13px;
+}
+
+.hostRegisteredProfile small {
+  color: #6e7f98;
+  font-size: 11px;
+}
+
+.hostListingChoiceWrap {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.hostListingChoiceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.hostListingChoiceCard {
+  border: 1px solid rgba(247, 143, 102, 0.28);
+  border-radius: 22px;
+  min-height: 188px;
+  background:
+    radial-gradient(circle at 88% 14%, rgba(255, 164, 131, 0.26), transparent 42%),
+    linear-gradient(160deg, #ffffff 0%, #fffaf6 100%);
+  padding: 20px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 22px rgba(242, 117, 75, 0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.hostListingChoiceCard::after {
+  content: "";
+  position: absolute;
+  inset: auto -14% -42% auto;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(247, 124, 82, 0.18) 0%, transparent 68%);
+}
+
+.hostListingChoiceCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(244, 118, 75, 0.5);
+  box-shadow: 0 18px 28px rgba(240, 104, 64, 0.2);
+}
+
+.hostListingChoiceCard:focus-visible {
+  outline: 2px solid rgba(244, 118, 75, 0.45);
+  outline-offset: 2px;
+}
+
+.hostListingChoiceCard h2 {
+  margin: 0 0 8px;
+  font-size: 33px;
+  letter-spacing: -0.7px;
+  color: #2f3138;
+  position: relative;
+  z-index: 1;
+  font-family: var(--host-font-display);
+}
+
+.hostListingChoiceCard p {
+  margin: 0;
+  color: #6f7480;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 42ch;
+  position: relative;
+  z-index: 1;
+}
+
+.hostBackToChoiceBtn {
+  width: fit-content;
+  border: 1px solid rgba(74, 129, 191, 0.35);
+  background: linear-gradient(160deg, #ffffff, #f1f7ff);
+  border-radius: 999px;
+  color: var(--host-blue);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(47, 111, 178, 0.14);
+}
+
+.hostBackToChoiceBtn:hover {
+  border-color: rgba(74, 129, 191, 0.52);
+  color: #25558a;
+}
+
+.hostEditorHeader p {
+  margin: 0;
+  color: #8f94a0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hostEditorHeader h1 {
+  margin: 8px 0 12px;
+  font-size: clamp(38px, 4vw, 56px);
+  letter-spacing: -1.3px;
+  line-height: 1.05;
+  font-family: var(--host-font-display);
+}
+
+.hostEditorHeader span {
+  display: block;
+  color: #7f8591;
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.hostEditorSectionHeader {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e6e8ec;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hostEditorSectionHeader h2 {
+  margin: 0;
+  font-size: 42px;
+  letter-spacing: -1px;
+  font-family: var(--host-font-display);
+}
+
+.hostEditorSectionHeader small {
+  color: var(--host-red);
+  letter-spacing: 1.2px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.hostEditorSectionHeader button {
+  border: none;
+  background: transparent;
+  color: var(--host-red);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hostEditorCard {
+  background: #ffffff;
+  border: 1px solid #e8eaee;
+  border-radius: 18px;
+  padding: 20px;
+}
+
+.hostBasicsCard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.hostBasicsCard label {
+  display: grid;
+  gap: 7px;
+  color: #3d4047;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.hostBasicsCard input,
+.hostBasicsCard textarea {
+  border: 1px solid #eceef2;
+  background: #f8f9fb;
+  border-radius: 12px;
+  padding: 12px;
+  color: #5a606d;
+  font: inherit;
+}
+
+.hostBasicsCard textarea {
+  min-height: 88px;
+  resize: none;
+}
+
+.hostSelectMock {
+  border: 1px solid #eceef2;
+  background: #f8f9fb;
+  border-radius: 12px;
+  height: 44px;
+  padding: 0 12px;
+  font: inherit;
+  color: #5a606d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hostSelectField {
+  border: none;
+  background: transparent;
+  color: #5a606d;
+  font: inherit;
+  width: 100%;
+  appearance: none;
+  outline: none;
+}
+
+.hostFieldFull {
+  grid-column: 1 / -1;
+}
+
+.hostPhotosCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.hostCoverPhoto {
+  margin: 0;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+.hostCoverPhoto img,
+.hostPhotoStack img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.hostCoverPhoto span {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.hostPhotoStack {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+
+.hostSmallPhotoWrap {
+  position: relative;
+  min-height: 0;
+}
+
+.hostSmallPhotoWrap button {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: var(--host-red);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 14px 22px rgba(239, 123, 72, 0.3);
+}
+
+.hostDeletePhotoBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(31, 47, 74, 0.78);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 140ms ease;
+}
+
+.hostDeletePhotoBtn:hover {
+  background: rgba(239, 123, 72, 0.95);
+}
+
+.hostUploadCard {
+  border: 1px dashed #d2d6dd;
+  background: #fbfcfd;
+  border-radius: 16px;
+  min-height: 120px;
+  color: #959baa;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.hostUploadCardCompact {
+  min-height: 120px;
+  grid-column: auto;
+}
+
+.hostPhotosCardEmpty {
+  grid-template-columns: 1.35fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.hostPhotosCardEmpty .hostUploadCardLarge {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.hostPhotosCardEmpty .hostUploadCardCompact {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.hostPhotosCardEmpty .hostUploadCard:last-child {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.hostUploadCardLarge {
+  min-height: 182px;
+}
+
+.hostLocationCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.hostLocationInfo p {
+  margin: 0;
+  color: #969ca8;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.hostLocationInfo h3 {
+  margin: 6px 0 4px;
+  font-size: 28px;
+  letter-spacing: -0.4px;
+}
+
+.hostLocationInfo span {
+  color: #767c88;
+  font-size: 16px;
+}
+
+.hostLocationInfo {
+  display: grid;
+  gap: 10px;
+}
+
+.hostLocationInfo label {
+  display: grid;
+  gap: 6px;
+  color: #3d4047;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.hostLocationInfo input {
+  border: 1px solid #eceef2;
+  background: #f8f9fb;
+  border-radius: 12px;
+  height: 42px;
+  padding: 0 12px;
+  color: #5a606d;
+  font: inherit;
+}
+
+.hostVisibilityBox {
+  margin-top: 12px;
+  border: 1px solid #eaedf2;
+  border-radius: 12px;
+  min-height: 44px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5f6572;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hostVisibilityBox input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  color: #5f6572;
+  font: inherit;
+  outline: none;
+}
+
+.hostMapPreview {
+  width: 100%;
+  height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #edf1f6;
+  border: 1px solid #d6d9df;
+}
+
+.hostMapFallback {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 16px;
+  color: #6f7684;
+  background: linear-gradient(170deg, #f8f9fc, #eef2f7);
+}
+
+.hostMapFallback p {
+  margin: 0;
+  font-weight: 700;
+}
+
+.hostMapFallback small {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.hostCoordinateChip {
+  border: 1px solid #e7ebf1;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6f7684;
+  background: #f9fbfd;
+}
+
+.hostAmenitiesCard {
+  display: grid;
+  gap: 14px;
+}
+
+.hostAmenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.hostAmenityChip {
+  border: 1px solid #ebeef2;
+  border-radius: 12px;
+  min-height: 42px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #515762;
+  font-size: 13px;
+  font-weight: 600;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.hostAmenityChip.isActive {
+  border-color: rgba(47, 111, 178, 0.45);
+  background: rgba(47, 111, 178, 0.1);
+}
+
+.hostAmenityCheck {
+  margin-left: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1px solid #d4d9e1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+}
+
+.hostAmenityCheck.isSelected {
+  background: var(--host-blue);
+  border-color: var(--host-blue);
+  color: #fff;
+}
+
+.hostBrowseAmenities {
+  border: 1px dashed #d6d9de;
+  border-radius: 12px;
+  height: 42px;
+  background: #fff;
+  color: #8a909c;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.hostPricingGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.hostPricingCard {
+  background: #ffffff;
+  border: 1px solid #eaedf2;
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.hostPricingCard p {
+  margin: 0;
+  color: #9ca2ae;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.hostPricingCard h3 {
+  margin: 8px 0 10px;
+  font-size: 40px;
+  letter-spacing: -0.9px;
+  font-family: var(--host-font-display);
+}
+
+.hostPricingCard h3 span {
+  font-size: 18px;
+  color: #8a909d;
+  font-weight: 600;
+}
+
+.hostPricingInput {
+  width: 100%;
+  margin: 8px 0 10px;
+  border: 1px solid #eceef2;
+  background: #f8f9fb;
+  border-radius: 10px;
+  height: 44px;
+  padding: 0 12px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2d3138;
+  box-sizing: border-box;
+}
+
+.hostPricingCard button {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  height: 32px;
+  background: #f2f4f7;
+  color: #454b57;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hostCalendarSync {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.hostCalendarSync h3 {
+  margin: 0;
+  font-size: 24px;
+  font-family: var(--host-font-display);
+}
+
+.hostCalendarSync p {
+  margin: 6px 0 0;
+  color: #7f8592;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hostCalendarSync p svg {
+  color: #16a34a;
+}
+
+.hostCalendarSync button {
+  border: none;
+  height: 34px;
+  border-radius: 999px;
+  padding: 0 14px;
+  background: var(--host-blue-soft);
+  color: var(--host-blue);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hostListingActionsCard {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.hostListingSecondaryBtn,
+.hostListingPrimaryBtn {
+  border: none;
+  height: 42px;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+
+.hostListingSecondaryBtn {
+  background: linear-gradient(160deg, #ffffff, #fff5ee);
+  color: #c86443;
+  border: 1px solid rgba(245, 126, 85, 0.35);
+}
+
+.hostListingPrimaryBtn {
+  background: linear-gradient(135deg, #ff9b68 0%, #ef7b48 100%);
+  color: #fff;
+  box-shadow: 0 12px 20px rgba(239, 123, 72, 0.3);
+}
+
+.hostListingSecondaryBtn:hover,
+.hostListingPrimaryBtn:hover {
+  transform: translateY(-1px);
+}
+
+.hostListingSecondaryBtn:hover {
+  background: linear-gradient(160deg, #fffaf7, #ffefe5);
+}
+
+.hostListingPrimaryBtn:hover {
+  box-shadow: 0 14px 22px rgba(239, 123, 72, 0.38);
+}
+
+/* ========== EARNINGS VIEW ========== */
+.hostEarningsPage {
+  padding: 28px 30px 30px;
+  width: min(1460px, 100%);
+  box-sizing: border-box;
+  margin: 0 auto;
+  overflow-y: auto;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 28px;
+}
+
+.hostEarningsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.hostEarningsHeader h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 800;
+  font-family: var(--host-font-display);
+  color: var(--host-text);
+}
+
+.hostEarningsHeader p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--host-soft);
+}
+
+.hostEarningsControls {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.hostEarningsToggle {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.hostToggleBtn {
+  border: none;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hostToggleBtn.isActive {
+  background: white;
+  color: var(--host-blue);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.hostFilterBtn {
+  border: 1px solid var(--host-line);
+  background: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--host-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.hostFilterBtn:hover {
+  border-color: var(--host-blue);
+  background: var(--host-blue-soft);
+  color: var(--host-blue);
+}
+
+.hostExportBtn {
+  background: linear-gradient(135deg, #ff9b68 0%, #ef7b48 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.hostExportBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(239, 123, 72, 0.3);
+}
+
+.hostEarningsGrid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+}
+
+.hostEarningsCard {
+  background: white;
+  border: 1px solid var(--host-line);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.hostEarningsCard h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--host-soft);
+  text-transform: uppercase;
+}
+
+.hostEarningsCard p {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--host-soft);
+}
+
+.hostEarningsLarge {
+  display: grid;
+  gap: 16px;
+}
+
+.hostEarningsAmount {
+  font-size: 44px !important;
+  font-weight: 800 !important;
+  color: var(--host-text) !important;
+  font-family: var(--host-font-display) !important;
+  margin: 8px 0 0 !important;
+}
+
+.hostEarningsChange {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.hostEarningsChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 8px;
+  min-height: 140px;
+  padding: 16px 0;
+  border-top: 1px solid var(--host-line);
+  border-bottom: 1px solid var(--host-line);
+}
+
+.hostChartBar {
+  width: 100%;
+  background: #f3f4f6;
+  border-radius: 4px 4px 0 0;
+  transition: background 0.2s ease;
+  min-height: 20px;
+}
+
+.hostChartBar:hover {
+  background: #e5e7eb;
+}
+
+.hostChartBarActive {
+  background: linear-gradient(135deg, #ff9b68 0%, #ef7b48 100%);
+}
+
+.hostChartLabels {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--host-soft);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.hostEarningsSmall {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hostPayoutIconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(239, 123, 72, 0.1);
+  color: var(--host-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.hostEarningsSmall h2 {
+  font-size: 28px !important;
+  color: var(--host-text) !important;
+  font-weight: 800 !important;
+  margin: 8px 0 !important;
+}
+
+.hostEarningsSmall small {
+  font-size: 11px;
+  color: var(--host-soft);
+  margin-bottom: 16px;
+}
+
+.hostPayoutProgress {
+  width: 100%;
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.hostProgressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--host-red), #ffad74);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.hostProgressLabel {
+  font-size: 11px !important;
+  color: var(--host-soft) !important;
+  margin-bottom: 16px !important;
+}
+
+.hostEarningsLink {
+  background: transparent;
+  border: none;
+  color: var(--host-red);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+  text-align: left;
+}
+
+.hostEarningsLink:hover {
+  color: #d05a3a;
+}
+
+.hostTransactionsSection {
+  display: grid;
+  gap: 16px;
+}
+
+.hostTransactionsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.hostTransactionsHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--host-text);
+  font-family: var(--host-font-display);
+}
+
+.hostTransactionsTable {
+  background: white;
+  border: 1px solid var(--host-line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.hostTableHeader {
+  display: grid;
+  grid-template-columns: 200px 120px 1fr 150px 110px;
+  gap: 0;
+  padding: 16px 20px;
+  background: #f9fafb;
+  border-bottom: 1px solid var(--host-line);
+  position: sticky;
+  top: 0;
+}
+
+.hostTableHeader .hostTableCol {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--host-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hostTableBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.hostTableRow {
+  display: grid;
+  grid-template-columns: 200px 120px 1fr 150px 110px;
+  gap: 0;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--host-line);
+  align-items: center;
+}
+
+.hostTableRow:last-child {
+  border-bottom: none;
+}
+
+.hostTableRow:hover {
+  background: #fafbfc;
+}
+
+.hostTableCol {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--host-text);
+  min-width: 0;
+}
+
+.hostTableCol strong {
+  font-weight: 700;
+}
+
+.hostTableCol small {
+  font-size: 12px;
+  color: var(--host-soft);
+  display: block;
+}
+
+.hostTableColGUEST {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.hostTableColGUEST small {
+  margin-top: 4px;
+}
+
+.hostTableColDATES,
+.hostTableColLISTING {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+}
+
+.hostTableColEARNINGS {
+  text-align: right;
+  font-weight: 700;
+  color: var(--host-text);
+}
+
+.hostTableColSTATUS {
+  justify-content: flex-start;
+}
+
+.hostTransactionAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.hostStatusTag {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.hostStatusPaid {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.hostStatusPending {
+  background: rgba(251, 146, 60, 0.1);
+  color: #f97316;
+}
+
+.hostSettingsPage {
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7faff 0%, #eef4ff 100%);
+  border: 1px solid var(--host-line);
+  box-shadow: 0 14px 28px rgba(22, 28, 37, 0.08);
+}
+
+.hostSettingsRail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 14px;
+  background: linear-gradient(180deg, #1f2430 0%, #2a3040 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hostSettingsIdentityCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hostSettingsIdentityCard img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.hostSettingsIdentityCard p,
+.hostSettingsIdentityCard h2,
+.hostSettingsIdentityCard span {
+  margin: 0;
+}
+
+.hostSettingsIdentityCard p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hostSettingsIdentityCard h2 {
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.hostSettingsIdentityCard span {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 12px;
+}
+
+.hostSettingsTabStack {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 8px;
+  scrollbar-width: thin;
+}
+
+.hostSettingsTab {
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #5a6a86;
+  height: 40px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.hostSettingsTab.isActive {
+  background: linear-gradient(135deg, rgba(100, 147, 229, 0.2), rgba(69, 114, 194, 0.25));
+  border-color: rgba(69, 114, 194, 0.35);
+  color: #fff;
+}
+
+.hostSettingsTabsBar {
+  border: 1px solid var(--host-line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 10px;
+}
+
+.hostSettingsTabsBar .hostSettingsTab.isActive {
+  color: #fff;
+  background: linear-gradient(135deg, #5f88d2, #3f6fbd);
+}
+
+.hostSettingsLogoutBtn {
+  margin-top: auto;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: #fff;
+  height: 42px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.hostSettingsPanel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  overflow: auto;
+  flex: 1;
+}
+
+.hostSettingsHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.hostSettingsHeader p {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #6b7ea6;
+}
+
+.hostSettingsHeader h1 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: -1px;
+  font-family: var(--host-font-display);
+}
+
+.hostSettingsHeader span {
+  display: block;
+  margin-top: 6px;
+  color: var(--host-soft);
+  max-width: 720px;
+}
+
+.hostSettingsPrimaryBtn,
+.hostSettingsGhostBtn {
+  border: none;
+  height: 42px;
+  border-radius: 999px;
+  padding: 0 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.hostSettingsPrimaryBtn {
+  background: linear-gradient(145deg, #ff9e6d 0%, #ef7b48 100%);
+  color: #fff;
+  box-shadow: 0 10px 18px rgba(239, 123, 72, 0.22);
+}
+
+.hostSettingsSummaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.hostSettingsSummaryCard,
+.hostSettingsCard {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--host-line);
+  border-radius: 18px;
+  box-shadow: 0 10px 18px rgba(22, 28, 37, 0.06);
+}
+
+.hostSettingsSummaryCard {
+  padding: 16px 18px;
+}
+
+.hostSettingsSummaryCard p {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #7a869a;
+  font-weight: 800;
+}
+
+.hostSettingsSummaryCard h3 {
+  margin: 8px 0 6px;
+  font-size: 28px;
+  letter-spacing: -0.8px;
+}
+
+.hostSettingsSummaryCard span {
+  color: var(--host-soft);
+  font-size: 13px;
+}
+
+.hostSettingsContentGrid {
+  display: grid;
+  gap: 14px;
+  flex: 1;
+  align-content: start;
+}
+
+.hostSettingsCard {
+  padding: 18px;
+  min-height: 0;
+}
+
+.hostSettingsPage .hostSettingsContentGrid > .hostSettingsCard:last-child {
+  margin-bottom: 8px;
+}
+
+.hostSettingsCard h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-family: var(--host-font-display);
+}
+
+.hostSettingsFormGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hostSettingsFormGrid label,
+.hostSettingsCard label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--host-soft);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hostSettingsFormGrid input,
+.hostSettingsFormGrid select,
+.hostSettingsCard textarea {
+  border: 1px solid var(--host-line);
+  border-radius: 12px;
+  background: #fff;
+  min-height: 42px;
+  padding: 10px 12px;
+  color: var(--host-text);
+}
+
+.hostSettingsCard textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.hostSettingsChipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hostSettingsSplitRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid var(--host-line);
+}
+
+.hostSettingsSplitRow:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.hostSettingsSplitRow strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.hostSettingsSplitRow p {
+  margin: 0;
+  color: var(--host-soft);
+  font-size: 13px;
+}
+
+.hostSettingsGhostBtn {
+  background: #ffffff;
+  color: var(--host-blue);
+  border: 1px solid #cfe0f3;
+}
+
+@media (max-width: 1100px) {
+  .hostSettingsPage {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .hostSettingsRail {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hostSettingsSummaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hostSettingsTabStack {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 1200px) {
+  .hostDashboardPage {
+    grid-template-columns: 84px 1fr;
+  }
+
+  .hostBrandBlock,
+  .hostNavItem span,
+  .hostBottomNav button,
+  .hostSidebarCopyright,
+  .hostAddPropertyBtn {
+    display: none;
+  }
+
+
+  .hostMainNav {
+    margin-top: 10px;
+  }
+
+  .hostNavItem {
+    justify-content: center;
+    padding: 0;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 980px) {
+  .hostMain {
+    padding: 18px;
+    gap: 16px;
+    grid-template-rows: auto auto auto;
+  }
+
+  .hostMetricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hostContentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hostBasicsCard,
+  .hostPhotosCard,
+  .hostLocationCard,
+  .hostPricingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hostSupportGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hostListingChoiceGrid,
+  .hostPhotosCardEmpty {
+    grid-template-columns: 1fr;
+  }
+
+  .hostRegisteredGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hostReservationsLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .hostArrivalsPanel {
+    border-left: none;
+    border-top: 1px solid #dbe6f6;
+    padding-left: 0;
+    padding-top: 12px;
+  }
+
+  .hostUploadCard {
+    grid-column: auto;
+  }
+
+  .hostAmenitiesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .hostDashboardPage {
+    height: auto;
+    display: block;
+  }
+
+  .hostSidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--host-line);
+    padding: 10px;
+  }
+
+  .hostMainNav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .hostNavItem {
+    height: 44px;
+  }
+
+  .hostMain {
+    padding: 12px;
+  }
+
+  .hostTopBar {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .hostSectionHeader h2,
+  .hostTopBar h1 {
+    font-size: 26px;
+  }
+
+  .hostEditorHeader h1,
+  .hostEditorSectionHeader h2,
+  .hostPricingCard h3 {
+    font-size: 28px;
+  }
+
+  .hostEditorHeader span {
+    font-size: 15px;
+  }
+
+  .hostAmenitiesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hostReservationsTopBar {
+    flex-direction: column;
+  }
+
+  .hostReservationsActions {
+    width: 100%;
+  }
+
+  .hostPropertySelector {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .hostCalendarCell {
+    min-height: 84px;
+    padding: 6px;
+  }
+
+  .hostCalendarHeader h2,
+  .hostArrivalsHeader h2 {
+    font-size: 28px;
+  }
+
+  .hostRegisteredGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hostCalendarSync {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hostReservationRow {
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+  }
+
+  .hostReservationRow h3 {
+    font-size: 16px;
+  }
+
+  .hostReservationRow p {
+    font-size: 13px;
+  }
+
+  .hostReservationRow button {
+    display: none;
+  }
+}
