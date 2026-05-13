@@ -1,0 +1,12 @@
+{
+  "id_housing": 2,
+  "id_owner": "73151243-0458-42cb-9204-63e8b47a7c88",
+  "id_type": 1,
+  "name": "Penthouse Milla de Oro",
+  "status": "available",
+  "description": "El mejor alojamiento en el corazón de la ciudad.",
+  "city": "Medellín",
+  "address": "Cra 43A # 1-50",
+  "price_per_night": 220000,
+  "capacity": 4
+}

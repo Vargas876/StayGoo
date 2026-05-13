@@ -1,0 +1,84 @@
+.document-upload-container {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.document-upload-container h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.alert.alert-success {
+  background: #e6f8eb;
+  color: #1a5632;
+  border: 1px solid #c3ebce;
+}
+
+.alert.alert-warning {
+  background: #fff8e6;
+  color: #7a5e00;
+  border: 1px solid #ffe8aa;
+}
+
+.alert.alert-error {
+  background: #ffebee;
+  color: #8c1d18;
+  border: 1px solid #ffccd2;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.upload-desc {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.file-input-wrapper input {
+  padding: 10px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #4A90E2;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #357abd;
+}
+
+.btn-primary:disabled {
+  background: #a0c4e8;
+  cursor: not-allowed;
+}
+
+.error-text {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin: 0;
+}
