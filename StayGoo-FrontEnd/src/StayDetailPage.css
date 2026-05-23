@@ -1,0 +1,658 @@
+.stayDetailPage {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(110, 164, 240, 0.2), transparent 38%),
+    radial-gradient(circle at 85% 0%, rgba(239, 123, 72, 0.14), transparent 30%),
+    #f2f7ff;
+  color: #1f2f4a;
+  padding: 34px 0 60px;
+}
+
+.stayDetailPageShell {
+  width: min(1280px, calc(100% - 52px));
+  margin: 0 auto;
+}
+
+.stayDetailBackBtn,
+.stayDetailQuickBtn,
+.stayDetailReserveBtn,
+.stayDetailGuestsStepper button,
+.stayDetailMoreBtn,
+.stayDetailShareBtn {
+  border: 1px solid #d7e4f5;
+  background: #fff;
+  color: #1f2f4a;
+  border-radius: 999px;
+}
+
+.stayDetailBackBtn {
+  height: 40px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.stayDetailTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.stayDetailTitle {
+  margin: 0;
+  font-size: clamp(34px, 4vw, 50px);
+  line-height: 1;
+  letter-spacing: -0.8px;
+}
+
+.stayDetailQuickActions {
+  display: flex;
+  gap: 8px;
+}
+
+.stayDetailQuickBtn {
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.stayDetailMeta {
+  margin: 0 0 22px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #4f6280;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.stayDetailDotSep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #9fb1cc;
+  display: inline-block;
+}
+
+.stayDetailGallery {
+  display: grid;
+  grid-template-columns: 2.15fr 1fr 1fr;
+  grid-template-rows: 184px 184px;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+
+.stayDetailGallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stayDetailGalleryMain {
+  grid-row: span 2;
+  border-radius: 18px 0 0 18px;
+  overflow: hidden;
+}
+
+.stayDetailGalleryTile {
+  overflow: hidden;
+}
+
+.stayDetailGalleryTile:nth-child(3) {
+  border-radius: 0 18px 0 0;
+}
+
+.stayDetailGalleryTile:nth-child(5) {
+  border-radius: 0 0 18px 0;
+}
+
+.stayDetailBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 36px;
+}
+
+.stayDetailLeftCol {
+  display: grid;
+  gap: 34px;
+}
+
+.stayDetailSection {
+  border-top: 1px solid #d7e4f5;
+  padding-top: 30px;
+}
+
+.stayDetailHostingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.stayDetailHostingRow h2,
+.stayDetailReviewsHeader {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: -0.8px;
+  line-height: 1.18;
+}
+
+.stayDetailHostingRow p {
+  margin: 10px 0 0;
+  color: #6e7f99;
+  line-height: 1.7;
+}
+
+.stayDetailHostBadge {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f1f5fc;
+}
+
+.stayDetailFacts {
+  display: grid;
+  gap: 20px;
+}
+
+.stayDetailFactItem {
+  display: flex;
+  gap: 16px;
+}
+
+.stayDetailFactIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 1px solid #d7e4f5;
+  display: grid;
+  place-items: center;
+  color: #2f6fb2;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.stayDetailFactItem strong,
+.stayDetailFactItem span {
+  display: block;
+}
+
+.stayDetailFactItem strong {
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  margin-bottom: 4px;
+}
+
+.stayDetailFactItem span,
+.stayDetailDesc,
+.stayDetailLocationCaption p,
+.stayDetailSubNote,
+.stayDetailPriceTip,
+.stayDetailReviewText {
+  color: #3a4f70;
+  line-height: 1.72;
+}
+
+.stayDetailDesc {
+  margin: 0;
+  font-size: 16px;
+  max-width: 92%;
+  line-height: 1.9;
+}
+
+.stayDetailShowMore,
+.stayDetailMoreBtn {
+  margin-top: 16px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2f4a;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.stayDetailAmenitiesGrid,
+.stayDetailReviewsGrid {
+  display: grid;
+  gap: 20px;
+}
+
+.stayDetailAmenitiesGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 28px;
+  margin-top: 18px;
+}
+
+.stayDetailAmenityItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stayDetailAmenityDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2f6fb2;
+  display: inline-block;
+}
+
+.stayDetailReviewsGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.stayDetailReviewCard {
+  border: 1px solid #d7e4f5;
+  border-radius: 14px;
+  background: #fff;
+  padding: 18px;
+}
+
+.stayDetailReviewTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stayDetailReviewTop img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.stayDetailReviewTop strong,
+.stayDetailReviewTop span {
+  display: block;
+}
+
+.stayDetailReviewTop span {
+  font-size: 13px;
+  color: #6e7f99;
+}
+
+.stayDetailReviewText {
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.stayDetailLocationMap {
+  border: 1px solid #d7e4f5;
+  border-radius: 18px;
+  margin-top: 28px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.stayDetailLocationMap img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1);
+}
+
+.stayDetailLocationCaption {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 16px;
+}
+
+.stayDetailLocationCaption h4 {
+  margin: 0;
+  line-height: 1.35;
+}
+
+.stayDetailLocationCaption p {
+  margin: 10px 0 0;
+  line-height: 1.85;
+}
+
+.stayDetailBookingCard {
+  position: sticky;
+  top: 20px;
+  border: 1px solid #d7e4f5;
+  border-radius: 20px;
+  background: #fff;
+  padding: 22px;
+  height: fit-content;
+  box-shadow: 0 16px 28px rgba(30, 56, 97, 0.1);
+}
+
+.stayDetailBookingPrice {
+  margin: 0;
+  font-size: 36px;
+  letter-spacing: -0.6px;
+}
+
+.stayDetailBookingPrice span {
+  font-size: 17px;
+  color: #6e7f99;
+}
+
+.stayDetailBookingForm {
+  margin-top: 18px;
+  border: 1px solid #d7e4f5;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.stayDetailBookingDates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.stayDetailBookingField {
+  padding: 12px 12px 13px;
+  border-bottom: 1px solid #d7e4f5;
+}
+
+.stayDetailBookingField:nth-child(1) {
+  border-right: 1px solid #d7e4f5;
+}
+
+.stayDetailBookingField small,
+.stayDetailBookingGuests small {
+  display: block;
+  color: #7d8ea8;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+}
+
+.stayDetailBookingDateInput {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  width: 100%;
+  color: #1f2f4a;
+  background: transparent;
+  padding: 0;
+  margin-top: 4px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.stayDetailBookingDateInput::placeholder {
+  color: #8ba0bc;
+  font-weight: 600;
+}
+
+.stayDetailBookingGuests {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stayDetailGuestCount {
+  margin-top: 4px;
+  display: block;
+  font-size: 14px;
+  color: #1f2f4a;
+}
+
+.stayDetailGuestsStepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stayDetailGuestsStepper button {
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.stayDetailGuestsStepper button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.stayDetailGuestsStepper span {
+  min-width: 16px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.stayDetailReserveBtn {
+  margin-top: 14px;
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(150deg, #f1724c 0%, #ef7b48 45%, #2f6fb2 100%);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.stayDetailSubNote {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 13px;
+}
+
+.stayDetailPriceBreakdown {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.stayDetailPriceRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #4b5f7f;
+}
+
+.stayDetailPriceTotal {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #d7e4f5;
+  font-weight: 800;
+  color: #1f2f4a;
+}
+
+.stayDetailPriceTip {
+  margin-top: 14px;
+  border: 1px solid #d7e4f5;
+  border-radius: 12px;
+  background: #f8fbff;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.stayDetailError {
+  background: #fff;
+  border: 1px solid #d7e4f5;
+  border-radius: 14px;
+  padding: 18px;
+  color: #1f2f4a;
+}
+
+.stayDetailBookingCard .react-datepicker-wrapper {
+  width: 100%;
+}
+
+.stayDetailBookingPopper {
+  z-index: 30;
+  animation: dateMenuIn 230ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stayDetailBookingPopper .react-datepicker {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  overflow: hidden;
+  font-family: "Manrope", "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+}
+
+.stayDetailBookingPopper .react-datepicker__header {
+  background: rgba(30, 41, 59, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 14px;
+}
+
+.stayDetailBookingPopper .react-datepicker__current-month,
+.stayDetailBookingPopper .react-datepicker-time__header,
+.stayDetailBookingPopper .react-datepicker-year-header {
+  color: #f8fafc;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.2px;
+}
+
+.stayDetailBookingPopper .react-datepicker__day-name {
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.stayDetailBookingPopper .react-datepicker__day,
+.stayDetailBookingPopper .react-datepicker__time-name {
+  color: #e2e8f0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+}
+
+.stayDetailBookingPopper .react-datepicker__day:hover {
+  border-color: var(--brand-coral);
+  background: rgba(255, 129, 95, 0.18);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.stayDetailBookingPopper .react-datepicker__day--keyboard-selected,
+.stayDetailBookingPopper .react-datepicker__day--selected,
+.stayDetailBookingPopper .react-datepicker__day--in-selecting-range,
+.stayDetailBookingPopper .react-datepicker__day--in-range {
+  border-color: var(--brand-coral-deep);
+  background: linear-gradient(135deg, var(--brand-coral) 0%, var(--brand-coral-deep) 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(255, 129, 95, 0.35);
+  font-weight: 700;
+}
+
+.stayDetailBookingPopper .react-datepicker__day--today {
+  border-color: #6f96d5;
+  background: rgba(111, 150, 213, 0.18);
+  color: #7dd3fc;
+  font-weight: 700;
+}
+
+.stayDetailBookingPopper .react-datepicker__day--outside-month {
+  color: rgba(148, 163, 184, 0.35) !important;
+  background: transparent;
+  border-color: transparent;
+}
+
+.stayDetailBookingPopper .react-datepicker__triangle {
+  display: none;
+}
+
+.stayDetailBookingPopper .react-datepicker__navigation-icon::before {
+  border-color: #cbd5e1;
+  border-width: 2px 2px 0 0;
+}
+
+.stayDetailBookingPopper .react-datepicker__navigation:hover *::before {
+  border-color: var(--brand-coral);
+}
+
+.stayDetailBookingPopper .react-datepicker__today-button {
+  background: rgba(30, 41, 59, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #7dd3fc;
+  font-weight: 700;
+}
+
+@keyframes dateMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 1060px) {
+  .stayDetailBody {
+    grid-template-columns: 1fr;
+  }
+
+  .stayDetailBookingCard {
+    position: static;
+  }
+}
+
+@media (max-width: 820px) {
+  .stayDetailPageShell {
+    width: calc(100% - 24px);
+  }
+
+  .stayDetailGallery {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 230px repeat(2, 150px);
+  }
+
+  .stayDetailGalleryMain {
+    grid-column: span 2;
+    grid-row: auto;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .stayDetailGalleryTile:nth-child(3),
+  .stayDetailGalleryTile:nth-child(5) {
+    border-radius: 0;
+  }
+
+  .stayDetailReviewsGrid,
+  .stayDetailAmenitiesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .stayDetailHostingRow h2,
+  .stayDetailReviewsHeader {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 420px) {
+  .stayDetailBookingPopper .react-datepicker {
+    transform: scale(0.94);
+    transform-origin: top center;
+  }
+}

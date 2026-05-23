@@ -8,6 +8,7 @@ import RegisterPage from "./RegisterPage.jsx";
 import LoaderPreviewPage from "./LoaderPreviewPage.jsx";
 import MemberDashboardPage from "./MemberDashboardPage.jsx";
 import HostDashboardPage from "./HostDashboardPage.jsx";
+import StayDetailPage from "./StayDetailPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/loader" element={<LoaderPreviewPage />} />
         <Route path="/member-dashboard" element={<MemberDashboardPage />} />
         <Route path="/host-dashboard" element={<HostDashboardPage />} />
+        <Route path="/stay-detail" element={<StayDetailPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

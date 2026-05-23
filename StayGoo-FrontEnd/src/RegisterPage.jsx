@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Eye, Mail, Lock, User } from "lucide-react";
+import { ArrowLeft, Eye, Mail, Lock, User, Check } from "lucide-react";
 import footerImage from "./assets/footer.jpg";
+import phoneCodes from "./phoneCodes";
 import { registerUser } from "./api";
 import "./RegisterPage.css";
 
@@ -25,6 +26,14 @@ const t = {
     emailAddress: "Correo electrónico",
     password: "Contraseña",
     minCharsPlaceholder: "Mínimo 8 caracteres",
+    passwordRequirementsTitle: "Tu contraseña debe incluir:",
+    passwordRequirementsList: [
+      "Al menos 8 caracteres",
+      "Una letra mayúscula",
+      "Una letra minúscula",
+      "Un número",
+      "Un símbolo"
+    ],
     showPasswordAria: "Mostrar contraseña",
     confirmPassword: "Confirmar contraseña",
     repeatPasswordPlaceholder: "Repite tu contraseña",
@@ -52,6 +61,9 @@ function RegisterPage() {
     fechaNacimiento: "",
     pais: "",
     telefono: "",
+    phoneCode: "+57",
+    phoneCodeLabel: phoneCodes.find((c) => c.code === "+57")?.label || "+57",
+    customPhoneCode: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -61,12 +73,88 @@ function RegisterPage() {
     aceptaMarketing: false
   });
 
+  useEffect(() => {
+    // Try to infer country from browser locale first
+    const tryLocale = () => {
+      try {
+        const lang = (navigator.languages && navigator.languages[0]) || navigator.language;
+        if (!lang) return false;
+        const parts = lang.split(/[-_]/);
+        const region = parts.length > 1 ? parts[1] : null;
+        if (!region) return false;
+        const iso = region.toUpperCase();
+        const match = phoneCodes.find((c) => c.iso === iso);
+        if (match) {
+          setFormData((prev) => ({ ...prev, phoneCode: match.code, phoneCodeLabel: match.label }));
+          return true;
+        }
+      } catch (e) {
+        /* ignore */
+      }
+      return false;
+    };
+
+    if (tryLocale()) return;
+
+    // Fallback: try geolocation -> reverse geocode via Nominatim
+    if (navigator.geolocation) {
+      const success = async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=3&addressdetails=1`;
+          const res = await fetch(url);
+          if (!res.ok) return;
+          const data = await res.json();
+          const cc = data?.address?.country_code?.toUpperCase();
+          if (!cc) return;
+          const match = phoneCodes.find((c) => c.iso === cc);
+          if (match) {
+            setFormData((prev) => ({ ...prev, phoneCode: match.code, phoneCodeLabel: match.label }));
+          }
+        } catch (e) {
+          // ignore
+        }
+      };
+
+      const error = () => {};
+      navigator.geolocation.getCurrentPosition(success, error, { timeout: 5000 });
+    }
+  }, []);
+
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
+    if (name === "phoneCodeLabel") {
+      // If user types/selects a country label, try to find matching code
+      const match = phoneCodes.find((c) => c.label === value);
+      if (match) {
+        setFormData((prev) => ({ ...prev, phoneCodeLabel: value, phoneCode: match.code }));
+        return;
+      }
+      // If user types a code directly like +34, use it as phoneCode
+      if (/^\+\d+/.test(value)) {
+        setFormData((prev) => ({ ...prev, phoneCodeLabel: value, phoneCode: value }));
+        return;
+      }
+      // Otherwise just update the label field
+      setFormData((prev) => ({ ...prev, phoneCodeLabel: value }));
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value
     }));
+  };
+
+  const isStrongPassword = (password) => {
+    return (
+      typeof password === "string"
+      && password.length >= 8
+      && /[a-z]/.test(password)
+      && /[A-Z]/.test(password)
+      && /\d/.test(password)
+      && /[^A-Za-z0-9]/.test(password)
+    );
   };
 
   const getAge = (birthDate) => {
@@ -84,6 +172,11 @@ function RegisterPage() {
 
     if (formData.password !== formData.confirmPassword) {
       setFormError(t.auth.errorPasswordMismatch);
+      return;
+    }
+
+    if (!isStrongPassword(formData.password)) {
+      setFormError(t.auth.passwordRequirements);
       return;
     }
 
@@ -106,7 +199,8 @@ function RegisterPage() {
         apellido: formData.apellido,
         email: formData.email,
         password: formData.password,
-        telefono: formData.telefono,
+        telefono:
+          (formData.phoneCode === "other" ? formData.customPhoneCode : formData.phoneCode) + formData.telefono,
         fechaNacimiento: formData.fechaNacimiento,
         pais: formData.pais,
         tipoUsuario: formData.tipoUsuario,
@@ -120,8 +214,46 @@ function RegisterPage() {
     }
   };
 
+  const isPasswordStrong = isStrongPassword(formData.password);
+  const requiredFields = [
+    "nombre",
+    "apellido",
+    "fechaNacimiento",
+    "pais",
+    "telefono",
+    "email",
+    "password",
+    "confirmPassword"
+  ];
+
+  const requiredFieldsFilled = requiredFields.every((key) => {
+    const v = formData[key];
+    if (typeof v === "string") return v.trim().length > 0;
+    return Boolean(v);
+  });
+
+  const canSubmit =
+    !isLoading &&
+    requiredFieldsFilled &&
+    isPasswordStrong &&
+    formData.password === formData.confirmPassword &&
+    formData.aceptaTerminos &&
+    formData.aceptaPoliticas;
+
+  const passwordsMatch =
+    formData.password && formData.confirmPassword && formData.password === formData.confirmPassword;
+
+  const passwordWrapClass = (base = "registerInputWrap registerPasswordInput") => {
+    if (!formData.password && !formData.confirmPassword) return base;
+    return `${base} ${passwordsMatch ? "pw-match" : "pw-mismatch"}`;
+  };
+
   return (
     <div className="registerPage">
+      <div className="registerBackground" aria-hidden="true">
+        <img src={footerImage} alt="" className="registerBackgroundImage" />
+      </div>
+
       <header className="registerTopBar">
         <Link to="/" className="registerBackLink">
           <ArrowLeft size={16} aria-hidden="true" />
@@ -130,16 +262,6 @@ function RegisterPage() {
       </header>
 
       <main className="registerLayout">
-        <section className="registerVisualPanel" aria-hidden="true">
-          <img src={footerImage} alt="" className="registerVisualImage" />
-          <div className="registerVisualCard">
-            <h2>{t.auth.registerWelcomeTitle}</h2>
-            <p>
-              {t.auth.registerWelcomeText}
-            </p>
-          </div>
-        </section>
-
         <section className="registerFormPanel">
           <h1>{t.auth.registerTitle}</h1>
           <p className="registerSubtitle">{t.auth.registerSubtitle}</p>
@@ -215,15 +337,41 @@ function RegisterPage() {
 
               <div>
                 <label htmlFor="telefono">{t.auth.phone}</label>
-                <div className="registerInputWrap">
+                <div className="registerInputWrap phoneInputWrap">
+                  <input
+                    list="phoneCodesList"
+                    name="phoneCodeLabel"
+                    value={formData.phoneCodeLabel}
+                    onChange={handleInputChange}
+                    aria-label="Buscar país o código"
+                    className="phoneCodeField"
+                    placeholder="Escribe país (ej. Colombia) o código"
+                  />
+                  <datalist id="phoneCodesList">
+                    {phoneCodes.map((c) => (
+                      <option key={c.code + c.label} value={c.label} />
+                    ))}
+                  </datalist>
+
+                  {formData.phoneCode === "other" || formData.phoneCodeLabel === "Otro / Otro código" ? (
+                    <input
+                      name="customPhoneCode"
+                      value={formData.customPhoneCode}
+                      onChange={handleInputChange}
+                      placeholder="+XX"
+                      className="phoneCodeCustom"
+                    />
+                  ) : null}
+
                   <input
                     id="telefono"
                     name="telefono"
                     type="tel"
-                    placeholder="+57 300 000 0000"
+                    placeholder="300 000 0000"
                     value={formData.telefono}
                     onChange={handleInputChange}
                     required
+                    className="phoneNumberInput"
                   />
                 </div>
               </div>
@@ -251,7 +399,7 @@ function RegisterPage() {
               <div className="registerFormGrid">
                 <div>
                   <label htmlFor="password">{t.auth.password}</label>
-                  <div className="registerInputWrap registerPasswordInput">
+                  <div className={passwordWrapClass()}>
                     <Lock size={16} aria-hidden="true" />
                     <input
                       id="password"
@@ -272,11 +420,35 @@ function RegisterPage() {
                       <Eye size={16} aria-hidden="true" />
                     </button>
                   </div>
+                  <div className="registerPasswordHint">
+                    <p>{t.auth.passwordRequirementsTitle}</p>
+                    <ul>
+                      {(() => {
+                        const pwd = formData.password || "";
+                        const checks = [
+                          pwd.length >= 8,
+                          /[A-Z]/.test(pwd),
+                          /[a-z]/.test(pwd),
+                          /\d/.test(pwd),
+                          /[^A-Za-z0-9]/.test(pwd)
+                        ];
+                        return t.auth.passwordRequirementsList.map((item, idx) => {
+                          const ok = checks[idx];
+                          return (
+                            <li key={item} className={ok ? "req-ok" : "req-no"}>
+                              <Check size={14} className={ok ? "reqIcon ok" : "reqIcon no"} />
+                              <span>{item}</span>
+                            </li>
+                          );
+                        });
+                      })()}
+                    </ul>
+                  </div>
                 </div>
 
                 <div>
                   <label htmlFor="confirmPassword">{t.auth.confirmPassword}</label>
-                  <div className="registerInputWrap registerPasswordInput">
+                  <div className={passwordWrapClass()}>
                     <Lock size={16} aria-hidden="true" />
                     <input
                       id="confirmPassword"
@@ -352,7 +524,22 @@ function RegisterPage() {
 
               {formError ? <p className="registerError">{formError}</p> : null}
 
-              <button className="registerPrimaryBtn" type="submit" disabled={isLoading}>
+              <button
+                className="registerPrimaryBtn"
+                type="submit"
+                disabled={!canSubmit}
+                title={
+                  !requiredFieldsFilled
+                    ? "Rellena los campos obligatorios"
+                    : formData.password !== formData.confirmPassword
+                    ? "Las contraseñas no coinciden"
+                    : !isPasswordStrong
+                    ? "La contraseña no cumple los requisitos"
+                    : !formData.aceptaTerminos || !formData.aceptaPoliticas
+                    ? "Debes aceptar términos y políticas"
+                    : undefined
+                }
+              >
                 {isLoading ? "Registrando..." : t.auth.registerSubmit}
               </button>
             </form>

@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 
 import { MessagesSection } from "./components/MessagesSection";
+import EquirectangularUploader from "./components/EquirectangularUploader";
 import { SettingsSection } from "./components/SettingsSection";
 import logoImage from "./assets/logoo.png";
 import { createHousing, getHousings, updateHousing, getHostBookings, getMyProfile } from "./api";
@@ -133,6 +134,7 @@ function HostDashboardPage() {
     "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80"
   ]);
   const [newListingPhotos, setNewListingPhotos] = useState([]);
+  const [newListingPanoramaPhotos, setNewListingPanoramaPhotos] = useState([]);
   const [selectedReservationListingId, setSelectedReservationListingId] = useState("lst-1");
   const [reservationViewDate, setReservationViewDate] = useState(new Date(2024, 9, 1));
   const [selectedCalendarDate, setSelectedCalendarDate] = useState("2024-10-01");
@@ -151,7 +153,7 @@ function HostDashboardPage() {
   const [supportStatus, setSupportStatus] = useState("idle");
   const dropdownRef = useRef(null);
   const newListingCoverPhotoRef = useRef(null);
-  const newListingAdditionalPhotosRef = useRef(null);
+  const newListingPanoramaPhotosRef = useRef(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -613,7 +615,60 @@ function HostDashboardPage() {
     setNewListingPhotos((prev) => prev.filter((_, photoIndex) => photoIndex !== index));
   };
 
+  const removeNewPanoramaPhoto = (index) => {
+    setNewListingPanoramaPhotos((prev) => {
+      const item = prev[index];
+      try {
+        if (item && item.src && item.src.startsWith("blob:")) URL.revokeObjectURL(item.src);
+      } catch (e) {
+        // ignore
+      }
+      return prev.filter((_, photoIndex) => photoIndex !== index);
+    });
+  };
+
+  // Revocar object URLs al desmontar o cuando cambie la lista
+  useEffect(() => {
+    return () => {
+      newListingPanoramaPhotos.forEach((item) => {
+        try {
+          if (item && item.src && item.src.startsWith("blob:")) URL.revokeObjectURL(item.src);
+        } catch (e) {
+          // ignore
+        }
+      });
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handlePanoramaValid = async (file, info) => {
+    if (!file) return;
+    // Crear object URL para preview/uso inmediato
+    const src = URL.createObjectURL(file);
+    setNewListingPanoramaPhotos((prev) => [...prev, { src, name: file.name, file }]);
+  };
+
   const handleNewPhotoUpload = (event) => {
+    const files = event.target.files;
+    if (!files) return;
+
+    const file = files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result;
+      if (typeof dataUrl === "string") {
+        setNewListingPhotos((prev) => [...prev, { src: dataUrl, name: file.name }]);
+      }
+    };
+    reader.readAsDataURL(file);
+
+    // Reset the input so the same file can be selected again
+    event.target.value = "";
+  };
+
+  const handleNewPanoramaPhotoUpload = (event) => {
     const files = event.target.files;
     if (!files) return;
 
@@ -622,13 +677,12 @@ function HostDashboardPage() {
       reader.onload = (e) => {
         const dataUrl = e.target?.result;
         if (typeof dataUrl === "string") {
-          setNewListingPhotos((prev) => [...prev, dataUrl]);
+          setNewListingPanoramaPhotos((prev) => [...prev, { src: dataUrl, name: file.name }]);
         }
       };
       reader.readAsDataURL(file);
     });
 
-    // Reset the input so the same file can be selected again
     event.target.value = "";
   };
 
@@ -647,7 +701,8 @@ function HostDashboardPage() {
         price_per_night: parseInt(newListingForm.basePrice) || 0,
         capacity: 4, 
         id_type: typeId,
-        status: isDraft ? 'maintenance' : 'available'
+        status: isDraft ? 'maintenance' : 'available',
+        panorama_images: newListingPanoramaPhotos.map((photo) => photo.src)
       };
 
       await createHousing(payload);
@@ -1708,7 +1763,7 @@ function HostDashboardPage() {
       <div className="hostEditorSectionHeader">
         <h2>Fotos</h2>
       </div>
-      <section className="hostEditorCard hostPhotosCard hostPhotosCardEmpty">
+      <section className="hostEditorCard hostPhotosCard hostPhotosCardSingle">
         <input
           type="file"
           ref={newListingCoverPhotoRef}
@@ -1717,75 +1772,95 @@ function HostDashboardPage() {
           hidden
           multiple={false}
         />
-        <input
-          type="file"
-          ref={newListingAdditionalPhotosRef}
-          onChange={handleNewPhotoUpload}
-          accept="image/*"
-          hidden
-          multiple
-        />
-        
-        {newListingPhotos[0] ? (
-          <article className="hostCoverPhoto">
-            <img src={newListingPhotos[0]} alt="Portada del nuevo alojamiento" />
-            <span>FOTO DE PORTADA</span>
-            <button
-              type="button"
-              className="hostDeletePhotoBtn"
-              aria-label="Eliminar foto de portada"
-              onClick={() => removeNewPhoto(0)}
-            >
-              <Trash2 size={14} />
-            </button>
-          </article>
-        ) : (
-            <button 
-              type="button" 
-              className="hostUploadCard hostUploadCardLarge"
-              onClick={() => newListingCoverPhotoRef.current?.click()}
-            >
-            <Upload size={20} />
-            Sube tu primera foto de portada
-          </button>
-        )}
-
-        <div className="hostPhotoStack">
-          {newListingPhotos.slice(1, 3).map((photo, index) => (
-            <div className="hostSmallPhotoWrap" key={`${photo}-${index}`}>
-              <img src={photo} alt={`Foto del alojamiento ${index + 2}`} />
-              <button
-                type="button"
-                className="hostDeletePhotoBtn"
-                aria-label="Eliminar foto"
-                onClick={() => removeNewPhoto(index + 1)}
-              >
-                <Trash2 size={14} />
-              </button>
-            </div>
-          ))}
-
-          {newListingPhotos.slice(1, 3).length < 2 ? (
-            <button 
-              type="button" 
-              className="hostUploadCard hostUploadCardCompact" 
-              aria-label="Añadir foto"
-              onClick={() => newListingAdditionalPhotosRef.current?.click()}
-            >
-              <Plus size={18} />
-              Añadir foto
-            </button>
-          ) : null}
-        </div>
-
-          <button 
-            type="button" 
-            className="hostUploadCard"
-            onClick={() => newListingAdditionalPhotosRef.current?.click()}
+        <div className="hostPhotoAttachmentLayout">
+          <button
+            type="button"
+            className={`hostUploadCard hostUploadCardLarge hostSinglePhotoDropzone ${newListingPhotos.length > 0 ? "hasContent" : ""}`}
+            onClick={() => newListingCoverPhotoRef.current?.click()}
           >
-          <Upload size={18} />
-          Arrastra las fotos aquí para subirlas
-        </button>
+            <Upload size={22} />
+            <strong>{newListingPhotos.length > 0 ? "Subir otra foto" : "Subir foto"}</strong>
+            <span>Un archivo a la vez</span>
+          </button>
+
+          <div className="hostPhotoAttachmentListWrap">
+            <div className="hostPhotoAttachmentListHeader">
+              <p>Fotos adjuntas</p>
+              <span>{newListingPhotos.length}</span>
+            </div>
+
+            <div className="hostPhotoAttachmentList">
+              {newListingPhotos.length > 0 ? (
+                newListingPhotos.map((photo, index) => (
+                  <article className="hostPhotoAttachmentItem" key={`${photo.name}-${index}`}>
+                    <div className="hostPhotoAttachmentThumb">
+                      <img src={photo.src} alt={photo.name} />
+                    </div>
+                    <div className="hostPhotoAttachmentMeta">
+                      <strong>{photo.name}</strong>
+                      <span>Adjuntada</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="hostDeletePhotoBtn"
+                      aria-label={`Eliminar foto ${index + 1}`}
+                      onClick={() => removeNewPhoto(index)}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </article>
+                ))
+              ) : (
+                <div className="hostPhotoAttachmentEmpty">Sin fotos adjuntas.</div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="hostEditorSectionHeader hostEditorSectionHeaderSpaced">
+        <h2>Modelo 360</h2>
+      </div>
+      <section className="hostEditorCard hostPanoramaCard">
+        <div className="hostPhotoAttachmentLayout hostPanoramaAttachmentLayout">
+          <EquirectangularUploader 
+            onValidImage={handlePanoramaValid} 
+            strict={false} 
+          />
+
+          <div className="hostPhotoAttachmentListWrap">
+            <div className="hostPhotoAttachmentListHeader">
+              <p>Modelo 360 adjunto</p>
+              <span>{newListingPanoramaPhotos.length}</span>
+            </div>
+
+            <div className="hostPhotoAttachmentList">
+              {newListingPanoramaPhotos.length > 0 ? (
+                newListingPanoramaPhotos.map((photo, index) => (
+                  <article className="hostPhotoAttachmentItem" key={`${photo.name}-${index}`}>
+                    <div className="hostPhotoAttachmentThumb">
+                      <img src={photo.src} alt={photo.name} />
+                    </div>
+                    <div className="hostPhotoAttachmentMeta">
+                      <strong>{photo.name}</strong>
+                      <span>360° adjunta</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="hostDeletePhotoBtn"
+                      aria-label={`Eliminar imagen 360 ${index + 1}`}
+                      onClick={() => removeNewPanoramaPhoto(index)}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </article>
+                ))
+              ) : (
+                <div className="hostPhotoAttachmentEmpty">Sin imágenes 360 adjuntas.</div>
+              )}
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="hostEditorCard hostListingActionsCard">

@@ -59,7 +59,9 @@ function LoginPage() {
 
   return (
     <div className="loginPage">
-      <div className="loginPageGlow" aria-hidden="true" />
+      <div className="loginBackground" aria-hidden="true">
+        <img src={footerImage} alt="" className="loginBackgroundImage" />
+      </div>
 
       <header className="loginTopBar">
         <Link to="/" className="loginBackLink">
@@ -69,18 +71,6 @@ function LoginPage() {
       </header>
 
       <main className="loginLayout">
-        <section className="loginVisualPanel" aria-hidden="true">
-          <img
-            src={footerImage}
-            alt=""
-            className="loginVisualImage"
-          />
-          <div className="loginVisualCard">
-            <h2>Bienvenido de nuevo</h2>
-            <p>Reconecta con estancias curadas y vuelve a planear tu próxima escapada.</p>
-          </div>
-        </section>
-
         <section className="loginFormPanel">
           <p className="loginEyebrow">ACCESO EXCLUSIVO</p>
           <h1>Iniciar sesión</h1>

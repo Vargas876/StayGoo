@@ -4,130 +4,139 @@
   --reg-coral: #ff815f;
   --reg-coral-deep: #ef6b49;
   --reg-ink: #1b2c48;
-  --reg-ink-soft: #5a6f93;
-  --reg-line: rgba(111, 150, 213, 0.34);
+  --reg-ink-soft: #475569;
+  --reg-line: rgba(111, 150, 213, 0.25);
+  
   min-height: 100svh;
-  padding: 6px 0 0;
-  background: radial-gradient(circle at 84% 8%, rgba(111, 150, 213, 0.12), transparent 40%),
-    linear-gradient(180deg, #f7fafe 0%, #edf3fb 100%);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
   font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
   color: var(--reg-ink);
+  background-color: #0f172a; /* Fallback dark background */
 }
 
+/* Background image overlay with cinematic dimming */
+.registerBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.registerBackgroundImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.35) contrast(1.05); /* Perfect brightness for reading text over background */
+}
+
+/* Top bar styled as a floating glass button */
 .registerTopBar {
-  width: min(1200px, calc(100% - 48px));
-  margin: 0 auto 10px;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
 }
 
 .registerBackLink {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--reg-ink);
+  color: #f8fafc;
   text-decoration: none;
   font-size: 14px;
   font-weight: 700;
-  padding: 8px 14px;
+  padding: 10px 18px;
   border-radius: 999px;
-  border: 1px solid var(--reg-line);
-  background: rgba(255, 255, 255, 0.76);
-}
-
-.registerLayout {
-  width: min(1200px, calc(100% - 48px));
-  margin: 0 auto;
-  min-height: calc(100svh - 72px);
-  display: grid;
-  grid-template-columns: 1fr 0.9fr;
-  gap: 48px;
-  align-items: center;
-}
-
-.registerVisualPanel {
-  position: relative;
-}
-
-.registerVisualImage {
-  width: 100%;
-  height: 740px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid rgba(111, 150, 213, 0.26);
-  box-shadow: 0 24px 50px rgba(22, 34, 54, 0.2);
-}
-
-.registerVisualCard {
-  position: absolute;
-  left: 48px;
-  bottom: 24px;
-  max-width: 520px;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 14px;
-  padding: 24px 26px;
-  box-shadow: 0 16px 30px rgba(19, 28, 42, 0.2);
-}
-
-.registerVisualCard h2 {
-  margin: 0 0 10px;
-  font-size: 44px;
-  line-height: 1;
-  letter-spacing: -1px;
-}
-
-.registerVisualCard p {
-  margin: 0;
-  color: var(--reg-ink-soft);
-  font-size: 17px;
-  line-height: 1.45;
-}
-
-.registerFormPanel {
-  width: min(530px, 100%);
-  justify-self: end;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(111, 150, 213, 0.24);
-  border-radius: 22px;
-  box-shadow: 0 20px 44px rgba(28, 46, 78, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 22px 20px 18px;
-  max-height: calc(100svh - 96px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.registerBackLink:hover {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Centered content layout */
+.registerLayout {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 24px 40px;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+/* Redesigned Form Panel with High-End Glassmorphism */
+.registerFormPanel {
+  width: min(560px, 100%);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 32px 30px 24px;
+  max-height: calc(100svh - 140px);
   display: flex;
   flex-direction: column;
+  z-index: 5;
+  box-sizing: border-box;
 }
 
 .registerFormPanel h1 {
   margin: 0;
-  font-size: clamp(38px, 3.5vw, 48px);
-  line-height: 0.96;
-  letter-spacing: -0.9px;
+  font-size: clamp(28px, 3.5vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -0.6px;
+  color: #0f172a;
+  font-weight: 800;
 }
 
 .registerSubtitle {
-  margin: 8px 0 12px;
-  color: var(--reg-ink-soft);
-  font-size: clamp(16px, 1.9vw, 21px);
-  line-height: 1.28;
+  margin: 6px 0 16px;
+  color: #334155;
+  font-size: clamp(14px, 1.8vw, 15px);
+  line-height: 1.4;
 }
 
+/* Customized scrollbar for form scrolling */
 .registerFormScroller {
   overflow-y: auto;
   padding-right: 8px;
-  margin-right: -4px;
+  margin-right: -10px;
 }
 
 .registerFormScroller::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .registerFormScroller::-webkit-scrollbar-track {
-  background: rgba(111, 150, 213, 0.12);
+  background: rgba(15, 23, 42, 0.05);
   border-radius: 999px;
 }
 
 .registerFormScroller::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(111, 150, 213, 0.72), rgba(79, 117, 176, 0.78));
+  background: rgba(79, 117, 176, 0.35);
   border-radius: 999px;
+}
+
+.registerFormScroller::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 117, 176, 0.55);
 }
 
 .registerForm {
@@ -137,58 +146,56 @@
 }
 
 .registerSectionTitle {
-  margin: 14px 0 2px;
-  font-size: 14px;
+  margin: 12px 0 2px;
+  font-size: 12px;
   line-height: 1;
-  letter-spacing: 0.6px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--reg-blue-deep);
+  font-weight: 800;
 }
 
 .registerSpacer {
   display: block;
   height: 1px;
-  margin: 2px 0;
-  background: linear-gradient(90deg, rgba(111, 150, 213, 0.24), rgba(111, 150, 213, 0.08));
+  margin: 4px 0;
+  background: linear-gradient(90deg, rgba(111, 150, 213, 0.25), rgba(111, 150, 213, 0.05));
 }
 
 .registerFormGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
 }
 
 .registerForm label {
-  margin-top: 0;
-  font-size: 15px;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
   font-weight: 700;
-  color: var(--reg-ink-soft);
+  color: #334155;
 }
 
+/* Premium styled Inputs */
 .registerInputWrap {
-  height: 50px;
+  height: 48px;
   border-radius: 12px;
-  border: 1px solid var(--reg-line);
-  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(111, 150, 213, 0.3);
+  background: rgba(255, 255, 255, 0.65);
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 0 14px;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .registerInputWrap svg {
   color: var(--reg-blue-deep);
+  flex-shrink: 0;
 }
 
-.registerInputWrap input {
-  border: none;
-  width: 100%;
-  background: transparent;
-  outline: none;
-  color: var(--reg-ink);
-  font-size: 16px;
-}
-
+.registerInputWrap input,
 .registerInputWrap select {
   border: none;
   width: 100%;
@@ -196,10 +203,61 @@
   outline: none;
   color: var(--reg-ink);
   font-size: 15px;
+  font-weight: 500;
 }
 
 .registerInputWrap input::placeholder {
-  color: #93a8cd;
+  color: #64748b;
+}
+
+.registerInputWrap:focus-within {
+  border-color: var(--reg-blue-deep);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 4px rgba(111, 150, 213, 0.18);
+}
+
+/* Password match visual feedback */
+.registerInputWrap.pw-match {
+  border-color: #16a34a; /* green */
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.06);
+}
+
+.registerInputWrap.pw-mismatch {
+  border-color: #ef4444; /* red */
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.04);
+}
+
+/* Phone selector layout */
+.phoneInputWrap {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.phoneCodeField {
+  background: transparent;
+  border: none;
+  padding: 6px 8px;
+  font-weight: 700;
+  color: var(--reg-ink);
+  min-width: 140px;
+  max-width: 280px;
+}
+
+.phoneCodeCustom {
+  width: 64px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(111,150,213,0.25);
+  background: rgba(255,255,255,0.6);
+}
+
+.phoneNumberInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
 }
 
 .registerPasswordInput {
@@ -217,220 +275,184 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
+.registerEyeBtn:hover {
+  background-color: rgba(15, 23, 42, 0.05);
+}
+
+.registerPasswordHint {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.registerPasswordHint p {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.registerPasswordHint ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.registerPasswordHint li {
+  margin: 0;
+}
+
+.registerPasswordHint ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.registerPasswordHint li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #475569;
+}
+
+.reqIcon {
+  flex-shrink: 0;
+}
+
+.reqIcon.ok {
+  color: #16a34a; /* green */
+}
+
+.reqIcon.no {
+  color: #94a3b8; /* muted */
+}
+
+.req-ok span {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.req-no span {
+  color: #64748b;
+}
+
+/* Primary register action button */
 .registerPrimaryBtn {
-  margin-top: 10px;
+  margin-top: 14px;
   height: 50px;
   border: none;
   border-radius: 12px;
   color: #fff;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   background: linear-gradient(90deg, var(--reg-coral), var(--reg-coral-deep));
-  box-shadow: 0 14px 22px rgba(239, 107, 73, 0.24);
+  box-shadow: 0 10px 20px rgba(239, 107, 73, 0.25);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.registerPrimaryBtn:hover:not(:disabled) {
+  transform: translateY(-1.5px);
+  box-shadow: 0 12px 24px rgba(239, 107, 73, 0.35);
+  background: linear-gradient(90deg, #ff9275, #f17b5b);
+}
+
+.registerPrimaryBtn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(239, 107, 73, 0.2);
+}
+
+.registerPrimaryBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .registerChecks {
-  margin-top: 8px;
+  margin-top: 6px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .registerCheckLabel {
   display: inline-flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 14px;
-  line-height: 1.35;
-  color: var(--reg-ink-soft);
+  font-size: 13px;
+  line-height: 1.4;
+  color: #334155;
+  cursor: pointer;
 }
 
 .registerCheckLabel input {
-  margin-top: 2px;
+  margin-top: 3px;
+  accent-color: var(--reg-coral-deep);
 }
 
 .registerError {
-  margin: 2px 0 0;
+  margin: 4px 0 0;
   color: #cf3f4f;
   font-size: 13px;
   font-weight: 600;
 }
 
-.registerDivider {
-  margin: 24px 0 14px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: #9ca8bc;
-  font-weight: 700;
-}
-
-.registerDivider::before,
-.registerDivider::after {
-  content: "";
-  height: 1px;
-  background: rgba(170, 183, 203, 0.42);
-}
-
-.registerSocialRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.registerSocialBtn {
-  height: 48px;
-  border-radius: 11px;
-  border: 1px solid rgba(177, 190, 211, 0.52);
-  background: rgba(249, 251, 253, 0.9);
-  color: #35455f;
-  font-size: 26px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.registerSocialDot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6, #e11d48, #f59e0b, #10b981);
-}
-
-.registerSocialDotApple {
-  background: linear-gradient(135deg, #0f172a, #64748b);
-}
-
 .registerLoginText {
   margin: 18px 0 0;
   text-align: center;
-  color: var(--reg-ink-soft);
-  font-size: 13px;
+  color: #334155;
+  font-size: 14px;
 }
 
 .registerLoginText a {
   color: var(--reg-coral-deep);
   font-weight: 700;
-  font-size: 13px;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-@media (max-width: 1100px) {
-  .registerLayout {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    min-height: auto;
-    padding-bottom: 26px;
-  }
-
-  .registerVisualImage {
-    height: 460px;
-  }
-
-  .registerVisualCard {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    max-width: none;
-  }
-
-  .registerVisualCard h2 {
-    font-size: 36px;
-  }
-
-  .registerVisualCard p {
-    font-size: 16px;
-  }
-
-  .registerFormPanel {
-    width: min(620px, 100%);
-    justify-self: center;
-    max-height: none;
-  }
-
-  .registerFormPanel h1 {
-    font-size: 44px;
-  }
-
-  .registerSubtitle {
-    font-size: 22px;
-  }
-
-  .registerFormScroller {
-    overflow: visible;
-    padding-right: 0;
-    margin-right: 0;
-  }
+.registerLoginText a:hover {
+  color: var(--reg-coral);
+  text-decoration: underline;
 }
 
+/* Responsiveness settings */
 @media (max-width: 640px) {
-  .registerPage {
-    padding-top: 10px;
+  .registerTopBar {
+    top: 16px;
+    left: 16px;
   }
 
-  .registerTopBar,
+  .registerBackLink {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
   .registerLayout {
-    width: calc(100% - 24px);
-  }
-
-  .registerVisualImage {
-    height: 320px;
-  }
-
-  .registerVisualCard {
-    position: static;
-    margin-top: 12px;
-    border-radius: 12px;
-    padding: 18px;
-  }
-
-  .registerVisualCard h2 {
-    font-size: 30px;
-  }
-
-  .registerFormPanel h1 {
-    font-size: 34px;
+    padding: 80px 16px 20px;
   }
 
   .registerFormPanel {
-    padding: 20px 14px 16px;
+    padding: 24px 20px 20px;
+    max-height: calc(100svh - 110px);
+    border-radius: 20px;
+  }
+
+  .registerFormPanel h1 {
+    font-size: 26px;
   }
 
   .registerSubtitle {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-
-  .registerForm label {
-    font-size: 13px;
+    margin-bottom: 12px;
   }
 
   .registerFormGrid {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .registerInputWrap {
-    height: 50px;
-  }
-
-  .registerInputWrap input {
-    font-size: 16px;
-  }
-
-  .registerPrimaryBtn {
-    font-size: 22px;
-  }
-
-  .registerSocialBtn {
-    font-size: 20px;
+    height: 46px;
   }
 }

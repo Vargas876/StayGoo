@@ -23,6 +23,12 @@ async function request(endpoint, options = {}) {
   const data = await response.json();
 
   if (!response.ok) {
+    if (response.status === 401 && data.error === 'Token inválido o expirado.') {
+      localStorage.removeItem("staygooToken");
+      localStorage.removeItem("staygooSession");
+      alert("Tu sesión ha caducado por seguridad. Por favor, inicia sesión nuevamente para continuar.");
+      window.location.href = "/login?redirect=" + encodeURIComponent(window.location.pathname);
+    }
     throw new Error(data.error || data.message || "Error en el servidor");
   }
 

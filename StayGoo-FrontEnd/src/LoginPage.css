@@ -1,246 +1,256 @@
 .loginPage {
-  --login-bg: #eef2f7;
-  --login-surface: rgba(255, 255, 255, 0.88);
-  --login-surface-strong: rgba(255, 255, 255, 0.95);
-  --login-border: rgba(160, 180, 210, 0.3);
-  --login-ink: #1f2f4a;
-  --login-ink-soft: #5f6f87;
-  --login-accent: #ff815f;
-  --login-accent-deep: #ef6b49;
+  --login-blue: #6f96d5;
+  --login-blue-deep: #4f75b0;
+  --login-coral: #ff815f;
+  --login-coral-deep: #ef6b49;
+  --login-ink: #1b2c48;
+  --login-ink-soft: #475569;
+  --login-line: rgba(111, 150, 213, 0.25);
   
   min-height: 100svh;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  padding: 0;
-  margin: 0;
+  overflow-x: hidden;
   font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
   color: var(--login-ink);
+  background-color: #0f172a; /* Fallback dark background */
+}
+
+/* Background image overlay with cinematic dimming */
+.loginBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
   overflow: hidden;
 }
 
-.loginPageGlow {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 20% 80%, rgba(36, 63, 104, 0.12), transparent 40%);
-  z-index: 0;
+.loginBackgroundImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.35) contrast(1.05); /* Perfect brightness for reading text over background */
 }
 
+/* Top bar styled as a floating glass button */
 .loginTopBar {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 50;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
 }
 
 .loginBackLink {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--login-ink);
-  font-size: 14px;
-  font-weight: 600;
+  color: #f8fafc;
   text-decoration: none;
-  border: 1px solid var(--login-border);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 18px;
   border-radius: 999px;
-  padding: 8px 14px;
-  background: var(--login-surface-strong);
-  transition: all 150ms ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .loginBackLink:hover {
-  background: var(--login-surface);
-  border-color: var(--login-accent-deep);
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
 }
 
+/* Centered content layout */
 .loginLayout {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
+  flex: 1;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  padding: 100px 24px 40px;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
 }
 
-.loginVisualPanel {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-}
-
-.loginVisualImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-  border: none;
-  box-shadow: none;
-}
-
-.loginVisualCard {
-  display: none;
-}
-
+/* Redesigned Form Panel with High-End Glassmorphism */
 .loginFormPanel {
-  width: min(420px, 100%);
-  background: var(--login-surface);
-  border: 1px solid var(--login-border);
-  border-radius: 26px;
-  padding: 36px 38px 32px;
-  box-shadow: 0 22px 50px rgba(23, 32, 48, 0.14);
-  backdrop-filter: blur(8px);
-  z-index: 10;
-  margin: 0 20px;
+  width: min(440px, 100%);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 36px 34px 30px;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .loginEyebrow {
   margin: 0;
-  font-size: 12px;
-  letter-spacing: 1.8px;
-  font-weight: 700;
-  color: var(--login-accent-deep);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  color: var(--login-blue-deep);
+  text-transform: uppercase;
 }
 
 .loginFormPanel h1 {
-  margin: 10px 0 26px;
-  font-size: 46px;
-  line-height: 1;
-  letter-spacing: -1.4px;
+  margin: 6px 0 22px;
+  font-size: clamp(26px, 3.5vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -0.6px;
+  color: #0f172a;
+  font-weight: 800;
 }
 
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .loginForm label {
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 0.8px;
-  color: var(--login-ink-soft);
+  display: block;
+  font-size: 13px;
   font-weight: 700;
+  color: #334155;
 }
 
+/* Premium styled Inputs */
 .loginInputWrap {
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(111, 150, 213, 0.3);
+  background: rgba(255, 255, 255, 0.65);
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 52px;
   padding: 0 14px;
-  border-radius: 12px;
-  border: 1px solid var(--login-border);
-  background: rgba(237, 242, 249, 0.84);
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .loginInputWrap svg {
-  color: #7d8faa;
+  color: var(--login-blue-deep);
+  flex-shrink: 0;
 }
 
 .loginInputWrap input {
-  width: 100%;
   border: none;
+  width: 100%;
   background: transparent;
-  font-size: 16px;
-  color: var(--login-ink);
   outline: none;
+  color: var(--login-ink);
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .loginInputWrap input::placeholder {
-  color: #94a4bc;
+  color: #64748b;
 }
 
-.loginRoleSwitcher {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-bottom: 4px;
-}
-
-.loginRoleBtn {
-  height: 44px;
-  border-radius: 11px;
-  border: 1px solid var(--login-border);
-  background: rgba(237, 242, 249, 0.84);
-  color: #5b6f8e;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 170ms ease;
-}
-
-.loginRoleBtn.isActive {
-  border-color: rgba(239, 107, 73, 0.85);
-  color: var(--login-accent-deep);
-  background: rgba(255, 135, 94, 0.16);
-  box-shadow: inset 0 0 0 1px rgba(239, 107, 73, 0.2);
+.loginInputWrap:focus-within {
+  border-color: var(--login-blue-deep);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 4px rgba(111, 150, 213, 0.18);
 }
 
 .loginPasswordRow {
-  margin-top: 8px;
+  margin-top: 6px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+}
+
+.loginPasswordRow label {
+  margin: 0;
 }
 
 .loginPasswordRow button {
   border: none;
   background: transparent;
-  color: var(--login-accent-deep);
+  color: var(--login-coral-deep);
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.loginPasswordRow button:hover {
+  color: var(--login-coral);
+  text-decoration: underline;
 }
 
 .loginRememberRow {
-  margin-top: 8px;
+  margin-top: 6px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  color: var(--login-ink-soft);
-  font-size: 14px;
-  text-transform: none;
-  letter-spacing: 0;
-  font-weight: 500;
+  gap: 8px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .loginRememberBox {
   width: 16px;
   height: 16px;
   border-radius: 5px;
-  border: 1px solid rgba(132, 154, 188, 0.8);
+  border: 1px solid rgba(111, 150, 213, 0.5);
+  background: rgba(255, 255, 255, 0.65);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: transparent;
-  transition: all 180ms ease;
+  transition: all 0.2s ease;
 }
 
 .loginRememberRow:hover .loginRememberBox {
-  color: var(--login-accent-deep);
-  border-color: var(--login-accent-deep);
+  border-color: var(--login-coral-deep);
 }
 
+.loginRememberRow input {
+  display: none;
+}
+
+/* Primary login action button */
 .loginPrimaryBtn {
-  margin-top: 8px;
-  height: 52px;
+  margin-top: 14px;
+  height: 50px;
   border: none;
   border-radius: 12px;
   color: #fff;
-  font-size: 27px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  background: linear-gradient(135deg, var(--login-accent), var(--login-accent-deep));
-  box-shadow: 0 14px 24px rgba(239, 107, 73, 0.28);
-  transition: all 150ms ease;
+  background: linear-gradient(90deg, var(--login-coral), var(--login-coral-deep));
+  box-shadow: 0 10px 20px rgba(239, 107, 73, 0.25);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .loginPrimaryBtn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 32px rgba(239, 107, 73, 0.32);
+  transform: translateY(-1.5px);
+  box-shadow: 0 12px 24px rgba(239, 107, 73, 0.35);
+  background: linear-gradient(90deg, #ff9275, #f17b5b);
+}
+
+.loginPrimaryBtn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(239, 107, 73, 0.2);
 }
 
 .loginPrimaryBtn:disabled {
@@ -249,79 +259,50 @@
 }
 
 .loginSignupText {
-  margin: 22px 0 0;
+  margin: 18px 0 0;
   text-align: center;
-  color: var(--login-ink-soft);
+  color: #334155;
   font-size: 14px;
 }
 
 .loginSignupText a {
-  border: none;
-  color: var(--login-accent-deep);
+  color: var(--login-coral-deep);
   font-weight: 700;
-  font-size: 15px;
   text-decoration: none;
-  transition: all 150ms ease;
+  transition: color 0.2s ease;
 }
 
 .loginSignupText a:hover {
+  color: var(--login-coral);
   text-decoration: underline;
 }
 
-/* Tablet */
-@media (max-width: 1100px) {
-  .loginFormPanel {
-    width: min(560px, 100%);
-  }
-}
-
-/* Mobile */
+/* Responsiveness settings */
 @media (max-width: 640px) {
   .loginTopBar {
-    top: 14px;
-    left: 14px;
+    top: 16px;
+    left: 16px;
   }
 
   .loginBackLink {
+    padding: 8px 14px;
     font-size: 13px;
-    padding: 8px 12px;
+  }
+
+  .loginLayout {
+    padding: 80px 16px 20px;
   }
 
   .loginFormPanel {
-    border-radius: 18px;
-    padding: 24px 18px 22px;
-    margin: 0 12px;
-    width: min(calc(100% - 24px), 420px);
+    padding: 26px 22px 22px;
+    border-radius: 20px;
   }
 
   .loginFormPanel h1 {
-    font-size: 36px;
-    margin: 10px 0 20px;
-  }
-
-  .loginEyebrow {
-    font-size: 11px;
-  }
-
-  .loginForm label {
-    font-size: 11px;
+    font-size: 26px;
   }
 
   .loginInputWrap {
-    height: 48px;
-    padding: 0 12px;
-  }
-
-  .loginPrimaryBtn {
-    font-size: 22px;
-    height: 48px;
-  }
-
-  .loginSignupText {
-    font-size: 13px;
-  }
-
-  .loginSignupText a {
-    font-size: 14px;
+    height: 46px;
   }
 }

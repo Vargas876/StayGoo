@@ -14,7 +14,7 @@ const spanishText = {
     checkIn: "Entrada",
     checkOut: "Salida",
     guests: "Huéspedes",
-    addGuests: "Añadir huéspedes",
+    addGuests: "Añadir",
     searchBtn: "Buscar →",
     datePlaceholder: "Fecha",
     invalidDateRange: "La fecha de salida debe ser posterior a la entrada",
@@ -259,7 +259,7 @@ export function useAppLogic() {
       })
     );
 
-    window.open(`/stay-detail.html?data=${payload}`, "staygoo-detail-tab", "noopener,noreferrer");
+    window.open(`/stay-detail?data=${payload}`, "staygoo-detail-tab", "noopener,noreferrer");
   };
 
   return {

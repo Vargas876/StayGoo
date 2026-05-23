@@ -1,7 +1,7 @@
-import "./App.css";
 import { useEffect, useRef, useState, createElement } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./App.css";
 import { es, enUS } from "date-fns/locale";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
