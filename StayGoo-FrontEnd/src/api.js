@@ -3,24 +3,45 @@
  * Todos los servicios que hablan con el servidor van aquí.
  */
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+export const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+
+export const isApiMisconfigured =
+  import.meta.env.PROD && !import.meta.env.VITE_API_URL;
 
 // ── Helper genérico para hacer peticiones ──────────────────────────────────────
 async function request(endpoint, options = {}) {
+  if (isApiMisconfigured) {
+    throw new Error(
+      "VITE_API_URL no está configurada en Vercel. Debe ser https://staygoo.onrender.com/api"
+    );
+  }
+
+  const { public: isPublicRead = false, headers: extraHeaders, ...fetchOptions } = options;
   const token = localStorage.getItem("staygooToken");
 
   const headers = {
     "Content-Type": "application/json",
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...options.headers,
+    ...(!isPublicRead && token ? { Authorization: `Bearer ${token}` } : {}),
+    ...extraHeaders,
   };
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
-    ...options,
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...fetchOptions,
     headers,
   });
 
-  const data = await response.json();
+  const rawBody = await response.text();
+  let data = null;
+  if (rawBody) {
+    try {
+      data = JSON.parse(rawBody);
+    } catch {
+      throw new Error(
+        `Respuesta inválida del servidor (${response.status}). Verifica VITE_API_URL.`
+      );
+    }
+  }
 
   if (!response.ok) {
     if (response.status === 401 && data.error === 'Token inválido o expirado.') {
@@ -93,7 +114,7 @@ export async function updateMyProfile(updates) {
  * Obtener todos los alojamientos
  */
 export async function getHousings() {
-  return request("/housings");
+  return request("/housings", { public: true });
 }
 
 /**
@@ -101,7 +122,7 @@ export async function getHousings() {
  * @param {string|number} id
  */
 export async function getHousingById(id) {
-  return request(`/housings/${id}`);
+  return request(`/housings/${id}`, { public: true });
 }
 
 /**

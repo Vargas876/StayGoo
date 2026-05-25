@@ -133,7 +133,8 @@ function App() {
     handleHeroFilterChange,
     handleCategoryClick,
     openListingDetails,
-    applyHeroFilters
+    applyHeroFilters,
+    clearFilters
   } = useAppLogic();
 
 
@@ -462,7 +463,16 @@ function App() {
       ) : null}
 
       {featuredListings.length + additionalListings.length === 0 ? (
-        <p className="noResults">{t.listings.noResults}</p>
+        <div className="noResultsWrap">
+          <p className="noResults">
+            {listingsError || t.listings.noResults}
+          </p>
+          {!listingsError ? (
+            <button type="button" className="clearFiltersBtn" onClick={clearFilters}>
+              Ver todos los alojamientos
+            </button>
+          ) : null}
+        </div>
       ) : null}
 
       <footer className="footer">

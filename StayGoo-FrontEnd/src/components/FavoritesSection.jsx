@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Heart, Star, MapPin, Users } from "lucide-react";
 import { getHousings } from "../api";
-import { mapHousingsToListings } from "../utils/listingMapper";
+import { mapHousingsToListings, extractHousingsList } from "../utils/listingMapper";
 import {
   getFavoriteIds,
   toggleFavoriteId,
@@ -30,7 +30,7 @@ export function FavoritesSection() {
       try {
         const data = await getHousings();
         if (!cancelled) {
-          setListings(mapHousingsToListings(data));
+          setListings(mapHousingsToListings(extractHousingsList(data)));
         }
       } catch (err) {
         console.error("Error cargando favoritos:", err);

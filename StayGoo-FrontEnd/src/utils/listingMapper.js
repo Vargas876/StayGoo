@@ -9,6 +9,21 @@ const categoryMap = {
 const DEFAULT_IMAGE =
   "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80";
 
+const HIDDEN_STATUSES = new Set(["maintenance", "draft", "borrador", "unavailable"]);
+
+export function isListingVisible(item) {
+  if (!item || item.id_housing == null) return false;
+  const status = String(item.status || "available").toLowerCase();
+  return !HIDDEN_STATUSES.has(status);
+}
+
+export function extractHousingsList(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.data)) return payload.data;
+  if (Array.isArray(payload?.housings)) return payload.housings;
+  return [];
+}
+
 export function mapHousingToListing(item, index = 0) {
   const typeName = item.type_housing ? item.type_housing.name : "";
   const mappedCategory = categoryMap[typeName] || "luxury";
@@ -22,7 +37,7 @@ export function mapHousingToListing(item, index = 0) {
   const address = item.address || "";
 
   return {
-    id: item.id_housing.toString(),
+    id: String(item.id_housing),
     title: item.name || "Sin título",
     category: mappedCategory,
     city,
@@ -44,8 +59,16 @@ export function mapHousingToListing(item, index = 0) {
 }
 
 export function mapHousingsToListings(housings = []) {
-  const list = Array.isArray(housings) ? housings : housings?.data ?? [];
+  const list = extractHousingsList(housings);
   return list
-    .filter((item) => (item.status || "available") === "available")
-    .map((item, index) => mapHousingToListing(item, index));
+    .filter(isListingVisible)
+    .map((item, index) => {
+      try {
+        return mapHousingToListing(item, index);
+      } catch (err) {
+        console.warn("No se pudo mapear alojamiento:", item?.id_housing, err);
+        return null;
+      }
+    })
+    .filter(Boolean);
 }

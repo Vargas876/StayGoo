@@ -1,6 +1,10 @@
 import { useMemo, useState, useEffect } from "react";
 import { getHousings } from "./api";
-import { mapHousingsToListings } from "./utils/listingMapper";
+import {
+  mapHousingsToListings,
+  extractHousingsList,
+} from "./utils/listingMapper";
+import { isApiMisconfigured } from "./api";
 import { matchesSearchQuery } from "./utils/searchUtils";
 
 const spanishText = {
@@ -159,8 +163,20 @@ export function useAppLogic() {
     async function fetchListings() {
       try {
         setListingsError("");
+        if (isApiMisconfigured) {
+          throw new Error(
+            "Falta VITE_API_URL en Vercel. Configúrala como https://staygoo.onrender.com/api y haz Redeploy."
+          );
+        }
         const data = await getHousings();
-        setApiListings(mapHousingsToListings(data));
+        const rawList = extractHousingsList(data);
+        const mapped = mapHousingsToListings(rawList);
+        setApiListings(mapped);
+        if (mapped.length === 0 && rawList.length > 0) {
+          setListingsError(
+            "Hay alojamientos en el servidor, pero ninguno está publicado como disponible."
+          );
+        }
       } catch (err) {
         console.error("Error cargando listings para App:", err);
         setListingsError(
@@ -241,7 +257,26 @@ export function useAppLogic() {
     }
 
     setFilterError("");
-    setAppliedFilters({ ...heroFilters });
+    setAppliedFilters({
+      destination: heroFilters.destination.trim(),
+      checkIn: heroFilters.checkIn,
+      checkOut: heroFilters.checkOut,
+      guests: heroFilters.guests,
+    });
+  };
+
+  const clearFilters = () => {
+    const empty = {
+      destination: "",
+      checkIn: null,
+      checkOut: null,
+      guests: "",
+    };
+    setHeroFilters(empty);
+    setAppliedFilters(empty);
+    setActiveCategoryIndex(null);
+    setSearch("");
+    setFilterError("");
   };
 
   const openListingDetails = (listing) => {
@@ -276,6 +311,7 @@ export function useAppLogic() {
     handleHeroFilterChange,
     handleCategoryClick,
     applyHeroFilters,
+    clearFilters,
     openListingDetails
   };
 }

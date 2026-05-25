@@ -1597,6 +1597,29 @@ body.dark {
   color: #7a8aaa;
 }
 
+.noResultsWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 24px;
+}
+
+.clearFiltersBtn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff815f, #ef6b49);
+}
+
+.clearFiltersBtn:hover {
+  filter: brightness(1.05);
+}
+
 /* FOOTER */
 .footer {
   margin-top: 44px;
