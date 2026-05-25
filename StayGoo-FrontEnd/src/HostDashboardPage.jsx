@@ -38,7 +38,7 @@ import { MessagesSection } from "./components/MessagesSection";
 import EquirectangularUploader from "./components/EquirectangularUploader";
 import { SettingsSection } from "./components/SettingsSection";
 import logoImage from "./assets/logoo.png";
-import { createHousing, getHousings, updateHousing, getHostBookings, getMyProfile } from "./api";
+import { createHousing, getHousings, updateHousing, getHostBookings, getMyProfile, uploadHousingImage } from "./api";
 import { useAuthUser } from "./useAuthUser";
 import "./HostDashboardPage.css";
 
@@ -404,35 +404,41 @@ function HostDashboardPage() {
             (item.host && item.host.id_user === userId)
           );
 
-          const mappedListings = hostHousings.map((item) => ({
-          id: "lst-" + item.id_housing, // El Dashboard asume formato id como lst-1
-          realId: item.id_housing,
-          title: item.name || "Sin título",
-          propertyType: item.type_housing ? item.type_housing.name : "architectural-home",
-          description: item.description || "",
-          address: item.address || "",
-          cityRegion: item.city || "",
-          visibility: "Approximate location",
-          basePrice: item.price_per_night?.toString() || "0",
-          weeklyDiscount: "0",
-          cleaningFee: "0",
-          amenities: {
-              wifi: true,
-              pool: false,
-              parking: false,
-              aircon: true,
-              fireplace: false,
-              kitchen: true,
-          },
-          coverImage:
-              "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
-          hostName: "Mi Alojamiento",
-          hostAvatar:
-              "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=180&q=80",
-          status: item.status === "available" ? "Publicado" : "Borrador",
-          rating: 4.8,
-          reservations: 0,
-          }));
+          const mappedListings = hostHousings.map((item) => {
+            const images = item.housing_images || [];
+            const normalImages = images.filter(img => !img.is_panorama);
+            const firstImage = normalImages.length > 0 ? normalImages[0].image_url : "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80";
+
+            return {
+              id: "lst-" + item.id_housing, // El Dashboard asume formato id como lst-1
+              realId: item.id_housing,
+              title: item.name || "Sin título",
+              propertyType: item.type_housing ? item.type_housing.name : "architectural-home",
+              description: item.description || "",
+              address: item.address || "",
+              cityRegion: item.city || "",
+              visibility: "Approximate location",
+              basePrice: item.price_per_night?.toString() || "0",
+              weeklyDiscount: "0",
+              cleaningFee: "0",
+              amenities: {
+                  wifi: true,
+                  pool: false,
+                  parking: false,
+                  aircon: true,
+                  fireplace: false,
+                  kitchen: true,
+              },
+              coverImage: firstImage,
+              housing_images: images,
+              hostName: "Mi Alojamiento",
+              hostAvatar:
+                  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=180&q=80",
+              status: item.status === "available" ? "Publicado" : "Borrador",
+              rating: 4.8,
+              reservations: 0,
+            };
+          });
           setRegisteredListings(mappedListings);
       }
     } catch (err) {
@@ -659,7 +665,7 @@ function HostDashboardPage() {
     reader.onload = (e) => {
       const dataUrl = e.target?.result;
       if (typeof dataUrl === "string") {
-        setNewListingPhotos((prev) => [...prev, { src: dataUrl, name: file.name }]);
+        setNewListingPhotos((prev) => [...prev, { src: dataUrl, name: file.name, file }]);
       }
     };
     reader.readAsDataURL(file);
@@ -677,7 +683,7 @@ function HostDashboardPage() {
       reader.onload = (e) => {
         const dataUrl = e.target?.result;
         if (typeof dataUrl === "string") {
-          setNewListingPanoramaPhotos((prev) => [...prev, { src: dataUrl, name: file.name }]);
+          setNewListingPanoramaPhotos((prev) => [...prev, { src: dataUrl, name: file.name, file }]);
         }
       };
       reader.readAsDataURL(file);
@@ -701,17 +707,44 @@ function HostDashboardPage() {
         price_per_night: parseInt(newListingForm.basePrice) || 0,
         capacity: 4, 
         id_type: typeId,
-        status: isDraft ? 'maintenance' : 'available',
-        panorama_images: newListingPanoramaPhotos.map((photo) => photo.src)
+        status: isDraft ? 'maintenance' : 'available'
       };
 
-      await createHousing(payload);
+      const newHousing = await createHousing(payload);
+      const idHousing = newHousing?.id_housing;
+
+      if (idHousing) {
+        // Subir fotos normales
+        for (const item of newListingPhotos) {
+          if (item.file) {
+            try {
+              await uploadHousingImage(idHousing, item.file, false);
+            } catch (err) {
+              console.error("Error subiendo foto normal:", err);
+            }
+          }
+        }
+
+        // Subir fotos panorámicas
+        for (const item of newListingPanoramaPhotos) {
+          if (item.file) {
+            try {
+              await uploadHousingImage(idHousing, item.file, true);
+            } catch (err) {
+              console.error("Error subiendo foto panorama:", err);
+            }
+          }
+        }
+      }
 
       alert(isDraft ? "Borrador guardado exitosamente." : "Alojamiento creado exitosamente. ¡Continúa configurando!");
       
       // Recarga los alojamientos para mostrar el nuevo
       await loadHousings();
       
+      // Reset variables
+      setNewListingPhotos([]);
+      setNewListingPanoramaPhotos([]);
       setListingAction(null);
     } catch (error) {
       console.error(error);

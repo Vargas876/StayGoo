@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
-import { getHousings } from "./api"; // ← Importado para obtener los datos reales
+import { getHousings } from "./api";
+import { mapHousingsToListings } from "./utils/listingMapper";
 
 const spanishText = {
   navbar: {
@@ -156,31 +157,7 @@ export function useAppLogic() {
     async function fetchListings() {
       try {
         const data = await getHousings();
-        const categoryMap = {
-          'Apartamento': 'apartments',
-          'Cabaña': 'cabins',
-          'Casa': 'countryside',
-          'Habitación': 'citystays'
-        };
-        const mapped = data.map((item, i) => {
-          const typeName = item.type_housing ? item.type_housing.name : "";
-          const mappedCategory = categoryMap[typeName] || "luxury";
-          
-          return {
-            id: item.id_housing.toString(),
-            title: item.name || "Sin título",
-            category: mappedCategory,
-          location: item.address ? `${item.address}, ${item.city}` : item.city || "Ciudad Desconocida",
-          maxGuests: item.capacity || 2,
-          price: `$${item.price_per_night || 0}`,
-          rating: 4.8,
-          featured: i < 3,
-          image: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80",
-          hostName: Array.isArray(item.host) ? (item.host[0]?.name || "Anfitrión") : (item.host?.name || "Anfitrión"),
-          isSuperHost: true // Mockeando superhost por ahora
-        };
-      });
-        setApiListings(mapped);
+        setApiListings(mapHousingsToListings(data));
       } catch (err) {
         console.error("Error cargando listings para App:", err);
       }

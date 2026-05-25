@@ -9,6 +9,12 @@ import { Umbrella, House, Building2, Waves, Castle, Gem, Landmark, Search, UserR
 import footerImage from "./assets/footer.jpg";
 import logoImage from "./assets/logoo.png";
 import { useAppLogic } from "./appLogic";
+import {
+  getFavoriteIds,
+  toggleFavoriteId,
+  isFavorite,
+  FAVORITES_CHANGED_EVENT,
+} from "./utils/favoritesStorage";
 
 registerLocale("es", es);
 registerLocale("en", enUS);
@@ -22,14 +28,17 @@ function App() {
       return false;
     }
   });
-  const [favorites, setFavorites] = useState(() => {
-    try {
-      const saved = window.localStorage.getItem("staygoFavorites");
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [favorites, setFavorites] = useState(getFavoriteIds);
+
+  useEffect(() => {
+    const syncFavorites = () => setFavorites(getFavoriteIds());
+    window.addEventListener(FAVORITES_CHANGED_EVENT, syncFavorites);
+    window.addEventListener("storage", syncFavorites);
+    return () => {
+      window.removeEventListener(FAVORITES_CHANGED_EVENT, syncFavorites);
+      window.removeEventListener("storage", syncFavorites);
+    };
+  }, []);
   const [isNavbarFloating, setIsNavbarFloating] = useState(false);
   const [isFilterDocked, setIsFilterDocked] = useState(false);
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
@@ -101,17 +110,12 @@ function App() {
 
   const toggleFavorite = (listingId, e) => {
     e.stopPropagation();
-    setFavorites((prev) => {
-      const updated = prev.includes(listingId)
-        ? prev.filter((id) => id !== listingId)
-        : [...prev, listingId];
-      try {
-        window.localStorage.setItem("staygoFavorites", JSON.stringify(updated));
-      } catch (error) {
-        console.error("Failed to save favorites:", error);
-      }
-      return updated;
-    });
+    try {
+      const updated = toggleFavoriteId(listingId);
+      setFavorites(updated);
+    } catch (error) {
+      console.error("Failed to save favorites:", error);
+    }
   };
 
   const {
@@ -378,8 +382,8 @@ function App() {
                   >
                     <Heart
                       size={18}
-                      fill={favorites.includes(place.id) ? "currentColor" : "none"}
-                      color={favorites.includes(place.id) ? "#ff815f" : "currentColor"}
+                      fill={isFavorite(place.id) ? "currentColor" : "none"}
+                      color={isFavorite(place.id) ? "#ff815f" : "currentColor"}
                       strokeWidth={2}
                     />
                   </button>
@@ -426,8 +430,8 @@ function App() {
                   >
                     <Heart
                       size={18}
-                      fill={favorites.includes(place.id) ? "currentColor" : "none"}
-                      color={favorites.includes(place.id) ? "#ff815f" : "currentColor"}
+                      fill={isFavorite(place.id) ? "currentColor" : "none"}
+                      color={isFavorite(place.id) ? "#ff815f" : "currentColor"}
                       strokeWidth={2}
                     />
                   </button>

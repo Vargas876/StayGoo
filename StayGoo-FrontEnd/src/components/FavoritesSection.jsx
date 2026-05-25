@@ -1,29 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Heart, Star, MapPin, Users } from "lucide-react";
-import { listings } from "../data";
+import { getHousings } from "../api";
+import { mapHousingsToListings } from "../utils/listingMapper";
+import {
+  getFavoriteIds,
+  toggleFavoriteId,
+  FAVORITES_CHANGED_EVENT,
+} from "../utils/favoritesStorage";
 
 export function FavoritesSection() {
-  const [favorites, setFavorites] = useState(() => {
-    try {
-      const saved = window.localStorage.getItem("staygoFavorites");
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
+  const [favorites, setFavorites] = useState(getFavoriteIds);
+  const [listings, setListings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const syncFavorites = () => setFavorites(getFavoriteIds());
+    window.addEventListener(FAVORITES_CHANGED_EVENT, syncFavorites);
+    window.addEventListener("storage", syncFavorites);
+    return () => {
+      window.removeEventListener(FAVORITES_CHANGED_EVENT, syncFavorites);
+      window.removeEventListener("storage", syncFavorites);
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadListings() {
+      try {
+        const data = await getHousings();
+        if (!cancelled) {
+          setListings(mapHousingsToListings(data));
+        }
+      } catch (err) {
+        console.error("Error cargando favoritos:", err);
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
     }
-  });
+
+    loadListings();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const favoriteListings = listings.filter((listing) =>
-    favorites.includes(listing.id)
+    favorites.includes(String(listing.id))
   );
 
-  const toggleFavorite = (listingId) => {
-    setFavorites((prev) => {
-      const updated = prev.includes(listingId)
-        ? prev.filter((id) => id !== listingId)
-        : [...prev, listingId];
-      window.localStorage.setItem("staygoFavorites", JSON.stringify(updated));
-      return updated;
-    });
+  const handleRemoveFavorite = (listingId) => {
+    const updated = toggleFavoriteId(listingId);
+    setFavorites(updated);
   };
 
   return (
@@ -42,7 +72,11 @@ export function FavoritesSection() {
       </header>
 
       <section className="favoritesGrid">
-        {favoriteListings.length === 0 ? (
+        {isLoading ? (
+          <div className="emptyFavoritesState">
+            <p>Cargando tus favoritos...</p>
+          </div>
+        ) : favoriteListings.length === 0 ? (
           <div className="emptyFavoritesState">
             <Heart size={48} strokeWidth={1.5} />
             <h3>Aun no tienes favoritos</h3>
@@ -55,7 +89,7 @@ export function FavoritesSection() {
                 <img src={listing.image} alt={listing.title} />
                 <button
                   className="removeFavoriteBtn"
-                  onClick={() => toggleFavorite(listing.id)}
+                  onClick={() => handleRemoveFavorite(listing.id)}
                   aria-label={`Quitar ${listing.title} de favoritos`}
                   type="button"
                 >

@@ -5,6 +5,12 @@ import { es } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import "./StayDetailPage.css";
 import PanoramaViewer from "./PanoramaViewer";
+import { getHousingById } from "./api";
+import {
+  isFavorite as isListingFavorite,
+  toggleFavoriteId,
+  FAVORITES_CHANGED_EVENT,
+} from "./utils/favoritesStorage";
 
 registerLocale("es", es);
 
@@ -50,18 +56,30 @@ const formatPrice = (rawPrice) => {
 
 const getGallery = (stay) => {
   const source = [];
+  if (Array.isArray(stay.housing_images)) {
+    const normal = stay.housing_images.filter(img => !img.is_panorama).map(img => img.image_url);
+    source.push(...normal);
+  }
   if (Array.isArray(stay.gallery)) {
     source.push(...stay.gallery);
   }
   if (stay.image) {
-    source.unshift(stay.image);
+    source.push(stay.image);
   }
   if (stay.coverImage) {
-    source.unshift(stay.coverImage);
+    source.push(stay.coverImage);
   }
 
   const unique = Array.from(new Set(source.filter(Boolean)));
   return [...unique, ...defaultGallery].slice(0, 5);
+};
+
+const getPanoramaSrc = (stay, defaultSrc) => {
+  if (Array.isArray(stay.housing_images)) {
+    const found = stay.housing_images.find(img => img.is_panorama);
+    if (found) return found.image_url;
+  }
+  return defaultSrc;
 };
 
 const addDays = (date, days) => {
@@ -106,7 +124,72 @@ function StayDetailPage() {
     }
   }, [location.search]);
 
-  const stay = stayData ?? {};
+  const [stay, setStay] = useState(stayData ?? {});
+
+  useEffect(() => {
+    if (stayData) {
+      setStay(stayData);
+    }
+  }, [stayData]);
+
+  useEffect(() => {
+    const fetchLatestDetails = async () => {
+      const id = stayData?.realId || stayData?.id;
+      if (id) {
+        try {
+          const latest = await getHousingById(id);
+          if (latest) {
+            const images = latest.housing_images || [];
+            const normalImages = images.filter(img => !img.is_panorama);
+            const firstImage = normalImages.length > 0 ? normalImages[0].image_url : "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80";
+
+            setStay(prev => ({
+              ...prev,
+              ...latest,
+              title: latest.name || prev.title,
+              location: latest.address ? `${latest.address}, ${latest.city}` : latest.city || prev.location,
+              maxGuests: latest.capacity || prev.maxGuests,
+              price: `$${latest.price_per_night || 0}/noche`,
+              image: firstImage,
+              housing_images: images
+            }));
+          }
+        } catch (err) {
+          console.error("Error fetching latest stay details:", err);
+        }
+      }
+    };
+    fetchLatestDetails();
+  }, [stayData]);
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const listingId = (stay.realId || stay.id)?.toString();
+    if (!listingId) return;
+
+    const syncFavorite = () => setIsFavorite(isListingFavorite(listingId));
+    syncFavorite();
+    window.addEventListener(FAVORITES_CHANGED_EVENT, syncFavorite);
+    window.addEventListener("storage", syncFavorite);
+    return () => {
+      window.removeEventListener(FAVORITES_CHANGED_EVENT, syncFavorite);
+      window.removeEventListener("storage", syncFavorite);
+    };
+  }, [stay]);
+
+  const handleToggleFavorite = () => {
+    const listingId = (stay.realId || stay.id)?.toString();
+    if (!listingId) return;
+
+    try {
+      toggleFavoriteId(listingId);
+      setIsFavorite(isListingFavorite(listingId));
+    } catch (err) {
+      console.error("Error toggling favorite:", err);
+    }
+  };
+
   const title = clean(stay.title, "Villa Horizonte");
   const locationName = clean(stay.location, clean(stay.cityRegion, "Santorini, Grecia"));
   const rating = clean(stay.rating, "4.9");
@@ -121,6 +204,7 @@ function StayDetailPage() {
     ? stay.amenities
     : ["Piscina infinita privada", "WiFi de alta velocidad", "Climatizacion central", "Vista panoramica al mar", "Chef privado disponible", "Estacionamiento valet gratuito", "Cocina gourmet", "Servicio completo de lavanderia"];
   const gallery = getGallery(stay);
+  const panoramaSrc = getPanoramaSrc(stay, gallery[0]);
   const summaryPrice = Number(String(price).replace(/[^0-9.]/g, "")) || 280;
   const hostName = clean(stay.hostName, "Anfitrión");
   const isSuperHost = stay.isSuperHost ?? true;
@@ -224,7 +308,7 @@ function StayDetailPage() {
     <main className="stayDetailPage">
       <div className="stayDetailPageShell">
         <header>
-          <button className="stayDetailBackBtn" type="button" onClick={() => navigate(-1)}>
+          <button className="stayDetailBackBtn" type="button" onClick={() => navigate("/")}>
             ← <span>Volver</span>
           </button>
           <div className="stayDetailTitleRow">
@@ -233,7 +317,14 @@ function StayDetailPage() {
               <button className="stayDetailQuickBtn" type="button" onClick={handleShare} id="detailShareBtn">
                 ↗ <span id="detailShareLabel">Compartir</span>
               </button>
-              <button className="stayDetailQuickBtn" type="button">❤ <span>Guardar</span></button>
+              <button 
+                className={`stayDetailQuickBtn ${isFavorite ? "stayDetailFavoriteActive" : ""}`} 
+                type="button" 
+                onClick={handleToggleFavorite}
+                style={isFavorite ? { color: "#ff815f" } : {}}
+              >
+                ❤ <span>{isFavorite ? "Guardado" : "Guardar"}</span>
+              </button>
             </div>
           </div>
           <p className="stayDetailMeta">
@@ -326,12 +417,23 @@ function StayDetailPage() {
             </article>
 
             <article className="stayDetailSection">
-              <h3 className="stayDetailReviewsHeader">Donde estaras</h3>
-                <div className="stayDetailLocationMap" onClick={() => setPanoramaOpen(true)} role="button" tabIndex={0} aria-label="Abrir visor 360">
-                  <div className="panorama-root panorama-clickable">
-                    <PanoramaViewer src={gallery[0]} />
-                  </div>
-                </div>
+              <h3 className="stayDetailReviewsHeader">Donde estarás</h3>
+              <div className="stayDetailLocationMap">
+                {panoramaSrc ? (
+                  <PanoramaViewer src={panoramaSrc} />
+                ) : (
+                  <div className="panorama-error">No hay imagen panorámica 360° disponible para este alojamiento.</div>
+                )}
+                {panoramaSrc && (
+                  <button
+                    className="panoramaExpandBtn"
+                    type="button"
+                    onClick={() => setPanoramaOpen(true)}
+                  >
+                    ⤢ Ver en pantalla completa 360°
+                  </button>
+                )}
+              </div>
               <div className="stayDetailLocationCaption">
                 <div>
                   <h4>{locationName}</h4>
@@ -344,7 +446,7 @@ function StayDetailPage() {
               <div className="panorama-lightbox" onClick={(e) => { if (e.target === e.currentTarget) setPanoramaOpen(false); }}>
                 <button className="panorama-close" type="button" onClick={() => setPanoramaOpen(false)}>Cerrar ✕</button>
                 <div className="panorama-lightboxContent">
-                  <PanoramaViewer key="lightbox" src={gallery[0]} />
+                  <PanoramaViewer key="lightbox-full" src={panoramaSrc} />
                 </div>
               </div>
             ) : null}

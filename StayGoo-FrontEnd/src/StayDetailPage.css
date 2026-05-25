@@ -299,7 +299,8 @@
   border-radius: 18px;
   margin-top: 28px;
   overflow: hidden;
-  background: #fff;
+  background: #0d1b2a;
+  position: relative;
 }
 
 .stayDetailLocationMap img {
@@ -307,6 +308,29 @@
   height: 300px;
   object-fit: cover;
   filter: grayscale(100%) contrast(1.1);
+}
+
+.panoramaExpandBtn {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  z-index: 10;
+  background: rgba(15, 25, 45, 0.82);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.18s, transform 0.15s;
+  letter-spacing: 0.2px;
+}
+
+.panoramaExpandBtn:hover {
+  background: rgba(30, 50, 90, 0.92);
+  transform: scale(1.04);
 }
 
 .stayDetailLocationCaption {

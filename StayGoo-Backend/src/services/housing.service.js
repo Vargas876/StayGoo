@@ -12,7 +12,8 @@ export const getHousings = async () => {
         .select(`
             *,
             type_housing (id_type, name),
-            host:user!housing_id_owner_fkey (id_user, name)
+            host:user!housing_id_owner_fkey (id_user, name),
+            housing_images (*)
         `);
     if (error) throw error;
     return data;
@@ -27,6 +28,7 @@ export const getHousingById = async (id_housing) => {
             type_housing (id_type, name),
             host:user!housing_id_owner_fkey (id_user, name, email, phone),
             availability (*),
+            housing_images (*),
             housing_service (
                 service (id_service, name)
             )

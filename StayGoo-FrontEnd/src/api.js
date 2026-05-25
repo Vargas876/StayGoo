@@ -203,3 +203,34 @@ export async function sendMessage(messageData) {
     body: JSON.stringify(messageData),
   });
 }
+
+/**
+ * Subir una imagen de alojamiento (normal o panorama)
+ * @param {string|number} idHousing
+ * @param {File} file
+ * @param {boolean} isPanorama
+ */
+export async function uploadHousingImage(idHousing, file, isPanorama) {
+  const formData = new FormData();
+  formData.append("image", file);
+  formData.append("is_panorama", isPanorama ? "true" : "false");
+
+  const token = localStorage.getItem("staygooToken");
+
+  const response = await fetch(`${BASE_URL}/housings/${idHousing}/images`, {
+    method: "POST",
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "Error al subir la imagen");
+  }
+
+  return data;
+}
+
